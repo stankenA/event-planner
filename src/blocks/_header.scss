@@ -1,0 +1,83 @@
+.header {
+  margin-top: 30px;
+
+  &__wrapper {
+    width: var(--content-width);
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 19px;
+  }
+
+  &__logo-link {
+    @include reset-link;
+    @include transition;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  &__title {
+    color: var(--main-colors-black, #0d0c0c);
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    letter-spacing: -2.56px;
+    margin: 0;
+  }
+
+  &__title-accent {
+    color: var(--main-colors-accent, #f51b1b);
+  }
+
+  &__right {
+    display: flex;
+    gap: 32px;
+    align-items: flex-end;
+  }
+
+  &__date {
+    color: var(--main-colors-black, #0d0c0c);
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    letter-spacing: -0.52px;
+    margin: 0;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__nav-btn {
+    @include reset-btn;
+    width: 64px;
+    height: 48px;
+    border-radius: 8px;
+    cursor: pointer;
+    background: url(../images/arrow-black-right-icon.svg) no-repeat center /
+      32px 32px;
+    background-color: var(--system-colors-element, #efefef);
+    @include transition;
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    &_prev {
+      rotate: 180deg;
+    }
+  }
+}

@@ -1,10 +1,11 @@
 import React from "react";
-import "./blocks/app";
+import "./App.scss";
+import Header from "./components/Header";
 
 function App() {
   return (
     <div className="page">
-      <div className="pages__wrapper"></div>
+      <Header />
     </div>
   );
 }
