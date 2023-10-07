@@ -7,7 +7,12 @@ const Header: FC = () => {
     <header className="header">
       <div className="header__wrapper">
         <div className="header__left">
-          <a href="#" className="header__logo-link">
+          <a
+            href="https://redcollar.ru/"
+            target="_blank"
+            rel="noreferrer"
+            className="header__logo-link"
+          >
             <Logo />
             red collar
           </a>
