@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 import "./App.scss";
 import Header from "./components/Header";
 import moment from "moment";
+import { currentDay, currentMonth, currentYear } from "./utils/contstants";
 
 type TDate = {
   day: number;
@@ -18,21 +19,30 @@ const App: FC = () => {
   const [calendarDates, setCalendarDates] = useState<TDate[]>([
     ...Array(42).fill({ day: "", month: "", year: "" }),
   ]);
-  const [day, setDay] = useState<number>(new Date().getDate());
-  const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
-  const [year, setYear] = useState<number>(new Date().getFullYear());
-  // const [startDay, setStartDay] = useState(
-  //   moment().startOf("month").startOf("week").subtract(1, "day")
-  // );
+  const [month, setMonth] = useState<number>(currentMonth);
+  const [year, setYear] = useState<number>(currentYear);
+  const [monthOverlap, setMonthOverlap] = useState<number>(0);
 
-  console.log(day, month, year);
   console.log(calendarDates);
+  console.log(currentDay, currentMonth);
+
+  function increaseMonthOverlap() {
+    setMonthOverlap(monthOverlap + 1);
+  }
+
+  function decreaseMonthOverlap() {
+    setMonthOverlap(monthOverlap - 1);
+  }
 
   useEffect(() => {
     const startDay = moment()
+      .add(monthOverlap, "month")
       .startOf("month")
       .startOf("week")
       .subtract(1, "day");
+
+    setMonth(moment().add(monthOverlap, "month").month());
+    setYear(moment().add(monthOverlap, "month").year());
 
     const currentCalendarDates = calendarDates.map(() => {
       const dateArr = startDay.add(1, "day").format("D-MM-YYYY").split("-");
@@ -43,25 +53,40 @@ const App: FC = () => {
       };
     });
     setCalendarDates(currentCalendarDates);
-  }, []);
+  }, [monthOverlap]);
 
   return (
     <div className="page">
-      <Header />
+      <Header
+        onPrevMonth={decreaseMonthOverlap}
+        onNextMonth={increaseMonthOverlap}
+        month={month}
+        year={year}
+      />
       <section className="calendar">
         <div className="calendar__wrapper">
           <ul className="calendar__grid">
             {calendarDates.map((date, i) => (
               <li
                 className={`calendar__cell ${
-                  month !== date.month ? "calendar__cell_inactive" : ""
+                  month !== date.month - 1 ? "calendar__cell_inactive" : ""
                 }`}
                 key={i}
               >
                 <p className="calendar__date">{date.day}</p>
                 <span
                   className={`calendar__event ${
-                    day > date.day ? "calendar__event_inactive" : ""
+                    // Инактивировать плашки событий, если:
+                    // Год события меньше текущего
+                    // Месяц события меньше текущего
+                    date.year < currentYear ||
+                    (date.month < currentMonth + 1 &&
+                      date.year <= currentYear) ||
+                    (date.day < currentDay &&
+                      date.month <= currentMonth + 1 &&
+                      date.year <= currentYear)
+                      ? "calendar__event_inactive"
+                      : ""
                   }`}
                 >
                   Музыкальный опен-эйррррррррррр
