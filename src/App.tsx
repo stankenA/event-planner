@@ -5,6 +5,7 @@ import moment from "moment";
 import { currentDay, currentMonth, currentYear } from "./utils/contstants";
 import { TDate } from "./utils/types";
 import Calendar from "./components/Calendar";
+import { api } from "./utils/api";
 
 const App: FC = () => {
   moment.updateLocale("ru", {
@@ -27,6 +28,8 @@ const App: FC = () => {
     setMonthOverlap(monthOverlap - 1);
   }
 
+  console.log(calendarDates);
+
   useEffect(() => {
     const startDay = moment()
       .add(monthOverlap, "month")
@@ -46,6 +49,10 @@ const App: FC = () => {
       };
     });
     setCalendarDates(currentCalendarDates);
+
+    api
+      .getEventsForPublic("2022-10-14T14:00:00.000Z")
+      .then((res) => console.log(res));
   }, [monthOverlap]);
 
   return (

@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { currentDay, currentMonth, currentYear } from "../utils/contstants";
 import { TCalendarCellProps, TDate } from "../utils/types";
+import EventBadge from "./EventBadge";
 
 const CalendarCell: FC<TCalendarCellProps> = ({ month, date }) => {
   function isDateInactive(date: TDate) {
@@ -20,14 +21,7 @@ const CalendarCell: FC<TCalendarCellProps> = ({ month, date }) => {
       }`}
     >
       <p className="calendar__date">{date.day}</p>
-      <span
-        className={`calendar__event ${
-          // Инактивировать плашки событий, дата которых меньше текущей
-          isDateInactive(date) ? "calendar__event_inactive" : ""
-        }`}
-      >
-        Музыкальный опен-эйррррррррррр
-      </span>
+      <EventBadge date={date} />
     </li>
   );
 };
