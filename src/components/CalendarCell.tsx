@@ -13,6 +13,10 @@ const CalendarCell: FC<TCalendarCellProps> = ({ date, month, events }) => {
     }
   }
 
+  function checkIsBadgeInactive(startEventDate: string) {
+    return moment(date).isBetween(startEventDate, moment(), "day", "[)");
+  }
+
   const dateArr = date.split("-");
   const cellDay = +dateArr[2];
   const cellMonth = +dateArr[1];
@@ -26,7 +30,14 @@ const CalendarCell: FC<TCalendarCellProps> = ({ date, month, events }) => {
       <p className="calendar__date">{`${cellDay}`}</p>
       {events.map((event) => {
         if (isDateInRange(event.dateStart, event.dateEnd)) {
-          return <EventBadge date={date} key={event.id} event={event} />;
+          return (
+            <EventBadge
+              date={date}
+              key={event.id}
+              event={event}
+              isInactive={checkIsBadgeInactive(event.dateStart)}
+            />
+          );
         }
         return "";
       })}

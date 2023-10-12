@@ -1,12 +1,12 @@
 import React, { FC } from "react";
-import { TEvent } from "../utils/types";
+import { TEventBadge } from "../utils/types";
 
-const EventBadge: FC<{ date: string; event: TEvent }> = ({ date, event }) => {
+const EventBadge: FC<TEventBadge> = ({ date, event, isInactive }) => {
   return (
     <span
       className={`calendar__event ${
         // Инактивировать плашки событий, дата которых меньше текущей
-        date ? "calendar__event_inactive" : ""
+        isInactive ? "calendar__event_inactive" : ""
       }`}
     >
       {event.title}

@@ -47,3 +47,9 @@ export type TCalendarCellProps = {
   date: string;
   events: TEvent[];
 };
+
+export type TEventBadge = {
+  date: string;
+  event: TEvent;
+  isInactive: boolean;
+};
