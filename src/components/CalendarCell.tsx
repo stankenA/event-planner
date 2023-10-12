@@ -1,27 +1,44 @@
 import React, { FC } from "react";
 import { currentDay, currentMonth, currentYear } from "../utils/contstants";
-import { TCalendarCellProps, TDate } from "../utils/types";
+import { TCalendarCellProps } from "../utils/types";
 import EventBadge from "./EventBadge";
 
-const CalendarCell: FC<TCalendarCellProps> = ({ month, date }) => {
-  function isDateInactive(date: TDate) {
-    return (
-      date.year < currentYear ||
-      (date.month < currentMonth + 1 && date.year <= currentYear) ||
-      (date.day < currentDay &&
-        date.month <= currentMonth + 1 &&
-        date.year <= currentYear)
-    );
+const CalendarCell: FC<TCalendarCellProps> = ({ date, month, events }) => {
+  function isDateInRange(startEventDate: string, endEventDate?: string | null) {
+    let startDateValue = Date.parse(startEventDate);
+    let currentCellDate = Date.parse(date);
+    let endDateValue;
+
+    console.log(date);
+
+    if (endEventDate) {
+      endDateValue = Date.parse(endEventDate);
+      return (
+        startDateValue <= currentCellDate && currentCellDate <= endDateValue
+      );
+    } else {
+      return currentCellDate >= startDateValue;
+    }
   }
+
+  const dateArr = date.split("-");
+  const cellDay = +dateArr[2];
+  const cellMonth = +dateArr[1];
 
   return (
     <li
       className={`calendar__cell ${
-        month !== date.month - 1 ? "calendar__cell_inactive" : ""
+        month !== cellMonth - 1 ? "calendar__cell_inactive" : ""
       }`}
     >
-      <p className="calendar__date">{date.day}</p>
-      <EventBadge date={date} />
+      <p className="calendar__date">{`${cellDay}`}</p>
+      {events.map((event) => {
+        console.log(isDateInRange(event.dateStart, event.dateEnd));
+        if (isDateInRange(event.dateStart, event.dateEnd)) {
+          return <EventBadge date={date} key={event.id} />;
+        }
+        return "";
+      })}
     </li>
   );
 };

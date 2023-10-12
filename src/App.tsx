@@ -3,7 +3,7 @@ import "./App.scss";
 import Header from "./components/Header";
 import moment from "moment";
 import { currentDay, currentMonth, currentYear } from "./utils/contstants";
-import { TDate } from "./utils/types";
+import { TEvent } from "./utils/types";
 import Calendar from "./components/Calendar";
 import { api } from "./utils/api";
 
@@ -13,12 +13,14 @@ const App: FC = () => {
   });
 
   // Переменные календаря
-  const [calendarDates, setCalendarDates] = useState<TDate[]>([
-    ...Array(42).fill({ day: "", month: "", year: "" }),
+  const [calendarDates, setCalendarDates] = useState<string[]>([
+    ...Array(42).fill(""),
   ]);
   const [month, setMonth] = useState<number>(currentMonth);
   const [year, setYear] = useState<number>(currentYear);
   const [monthOverlap, setMonthOverlap] = useState<number>(0);
+
+  const [events, setEvents] = useState<TEvent[]>([]);
 
   function increaseMonthOverlap() {
     setMonthOverlap(monthOverlap + 1);
@@ -28,10 +30,8 @@ const App: FC = () => {
     setMonthOverlap(monthOverlap - 1);
   }
 
-  console.log(calendarDates);
-
   useEffect(() => {
-    const startDay = moment()
+    let startDay = moment()
       .add(monthOverlap, "month")
       .startOf("month")
       .startOf("week")
@@ -41,19 +41,27 @@ const App: FC = () => {
     setYear(moment().add(monthOverlap, "month").year());
 
     const currentCalendarDates = calendarDates.map(() => {
-      const dateArr = startDay.add(1, "day").format("D-MM-YYYY").split("-");
-      return {
-        day: +dateArr[0],
-        month: +dateArr[1],
-        year: +dateArr[2],
-      };
+      const date = startDay.add(1, "day").format("YYYY-MM-DD");
+      return date;
     });
     setCalendarDates(currentCalendarDates);
-
-    api
-      .getEventsForPublic("2022-10-14T14:00:00.000Z")
-      .then((res) => console.log(res));
   }, [monthOverlap]);
+
+  useEffect(() => {
+    const startDate = new Date(calendarDates[0]).toJSON();
+    const endDate = new Date(calendarDates[calendarDates.length - 1]).toJSON();
+
+    async function getEvents() {
+      try {
+        const response = await api.getEventsForPublic(startDate, endDate);
+        setEvents(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getEvents();
+  }, [calendarDates]);
 
   return (
     <div className="page">
@@ -68,8 +76,7 @@ const App: FC = () => {
           <Calendar
             calendarDates={calendarDates}
             month={month}
-            year={year}
-            monthOverlap={monthOverlap}
+            events={events}
           />
         </div>
       </section>
