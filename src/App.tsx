@@ -22,14 +22,24 @@ const App: FC = () => {
 
   const [events, setEvents] = useState<TEvent[]>([]);
 
+  // функции для переключения месяцев с ограничением в полгода
   function increaseMonthOverlap() {
+    if (monthOverlap === 6) {
+      return;
+    }
+
     setMonthOverlap(monthOverlap + 1);
   }
 
   function decreaseMonthOverlap() {
+    if (monthOverlap === -6) {
+      return;
+    }
+
     setMonthOverlap(monthOverlap - 1);
   }
 
+  // заполнение текущей страницы календаря необходимыми датами
   useEffect(() => {
     let startDay = moment()
       .add(monthOverlap, "month")
@@ -47,13 +57,26 @@ const App: FC = () => {
     setCalendarDates(currentCalendarDates);
   }, [monthOverlap]);
 
+  // запрос всех ивентов, начало которых попадает в период текущей страницы календаря
   useEffect(() => {
-    const startDate = new Date(calendarDates[0]).toJSON();
-    const endDate = new Date(calendarDates[calendarDates.length - 1]).toJSON();
+    // для избежания запроса всех ивентов при первом рендере
+    if (calendarDates[0].length === 0) {
+      return;
+    }
+
+    const firstCalendarDate = moment(calendarDates[0])
+      .add(-1, "month")
+      .toJSON();
+    const lastCalendarDate = moment(calendarDates[calendarDates.length - 1])
+      .add(1, "month")
+      .toJSON();
 
     async function getEvents() {
       try {
-        const response = await api.getEventsForPublic(startDate, endDate);
+        const response = await api.getEventsForPublic(
+          firstCalendarDate,
+          lastCalendarDate
+        );
         setEvents(response.data);
       } catch (error) {
         console.log(error);
@@ -62,6 +85,8 @@ const App: FC = () => {
 
     getEvents();
   }, [calendarDates]);
+
+  console.log(events);
 
   return (
     <div className="page">

@@ -2,22 +2,14 @@ import React, { FC } from "react";
 import { currentDay, currentMonth, currentYear } from "../utils/contstants";
 import { TCalendarCellProps } from "../utils/types";
 import EventBadge from "./EventBadge";
+import moment from "moment";
 
 const CalendarCell: FC<TCalendarCellProps> = ({ date, month, events }) => {
   function isDateInRange(startEventDate: string, endEventDate?: string | null) {
-    let startDateValue = Date.parse(startEventDate);
-    let currentCellDate = Date.parse(date);
-    let endDateValue;
-
-    console.log(date);
-
     if (endEventDate) {
-      endDateValue = Date.parse(endEventDate);
-      return (
-        startDateValue <= currentCellDate && currentCellDate <= endDateValue
-      );
+      return moment(date).isBetween(startEventDate, endEventDate, "day", "[]");
     } else {
-      return currentCellDate >= startDateValue;
+      return date === moment(startEventDate).format("YYYY-MM-DD");
     }
   }
 
@@ -33,9 +25,8 @@ const CalendarCell: FC<TCalendarCellProps> = ({ date, month, events }) => {
     >
       <p className="calendar__date">{`${cellDay}`}</p>
       {events.map((event) => {
-        console.log(isDateInRange(event.dateStart, event.dateEnd));
         if (isDateInRange(event.dateStart, event.dateEnd)) {
-          return <EventBadge date={date} key={event.id} />;
+          return <EventBadge date={date} key={event.id} event={event} />;
         }
         return "";
       })}

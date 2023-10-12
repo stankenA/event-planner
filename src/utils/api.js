@@ -106,9 +106,9 @@ class API {
     let finalURL;
 
     if (startDate && !endDate) {
-      finalURL = `?populate=*&filters[dateStart][$gte]=${startDate}&filters[dateStart][$lte]=${startDate}`;
+      finalURL = `?populate=*&filters[dateStart][$gte]=${startDate}`;
     } else if (startDate && endDate) {
-      finalURL = `?populate=*&filters[dateStart][$gte]=${startDate}&filters[dateEnd][$lte]=${endDate}`;
+      finalURL = `?populate=*&filters[dateStart][$gte]=${startDate}&filters[dateStart][$lte]=${endDate}`;
     } else {
       finalURL = "";
     }

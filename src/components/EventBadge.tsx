@@ -1,6 +1,7 @@
 import React, { FC } from "react";
+import { TEvent } from "../utils/types";
 
-const EventBadge: FC<{ date: string }> = ({ date }) => {
+const EventBadge: FC<{ date: string; event: TEvent }> = ({ date, event }) => {
   return (
     <span
       className={`calendar__event ${
@@ -8,7 +9,7 @@ const EventBadge: FC<{ date: string }> = ({ date }) => {
         date ? "calendar__event_inactive" : ""
       }`}
     >
-      {date}
+      {event.title}
     </span>
   );
 };
