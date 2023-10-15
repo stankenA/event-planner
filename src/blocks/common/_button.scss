@@ -12,6 +12,9 @@
   @include transition;
   color: #fff;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: var(--main-colors-accent, #f51b1b);

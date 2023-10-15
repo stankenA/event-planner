@@ -80,4 +80,27 @@
       rotate: 180deg;
     }
   }
+
+  &__user-info {
+    display: flex;
+    align-items: flex-end;
+    gap: 33px;
+  }
+
+  &__user-img-container {
+    display: block;
+    border-radius: 50%;
+    background: #efefef;
+    position: relative;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+  }
+
+  &__user-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }

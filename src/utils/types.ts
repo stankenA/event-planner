@@ -1,5 +1,4 @@
-export type TButton = {
-  txt: string;
+export type TButton = React.PropsWithChildren & {
   isDisabled?: boolean;
   handleClick: () => void;
 };
