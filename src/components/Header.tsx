@@ -8,15 +8,19 @@ import userAvatar from "../images/user-avatar-default.png";
 type THeaderProps = {
   onPrevMonth: () => void;
   onNextMonth: () => void;
+  handleLogin: () => void;
   month: number;
   year: number;
+  isLogged: boolean;
 };
 
 const Header: FC<THeaderProps> = ({
   onPrevMonth,
   onNextMonth,
+  handleLogin,
   month,
   year,
+  isLogged,
 }) => {
   return (
     <header className="header">
@@ -52,32 +56,35 @@ const Header: FC<THeaderProps> = ({
               onClick={onNextMonth}
             ></button>
           </div>
-          {/* <Button handleClick={() => console.log("boop")}>Войти</Button> */}
-          <div className="header__user-info">
-            <Button handleClick={() => console.log("boop")}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                fill="none"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M13 1L9 1V9.00001L1.00001 9.00001L1.00001 13L9 13V21L13 21L13 13L21 13L21 9.00001L13 9.00001L13 1Z"
-                  fill="white"
+          {isLogged ? (
+            <div className="header__user-info">
+              <Button handleClick={() => console.log("boop")}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 22 22"
+                  fill="none"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M13 1L9 1V9.00001L1.00001 9.00001L1.00001 13L9 13V21L13 21L13 13L21 13L21 9.00001L13 9.00001L13 1Z"
+                    fill="white"
+                  />
+                </svg>
+              </Button>
+              <div className="header__user-img-container">
+                <img
+                  src={userAvatar}
+                  alt="Аватар пользователя"
+                  className="header__user-img"
                 />
-              </svg>
-            </Button>
-            <div className="header__user-img-container">
-              <img
-                src={userAvatar}
-                alt="Аватар пользователя"
-                className="header__user-img"
-              />
+              </div>
             </div>
-          </div>
+          ) : (
+            <Button handleClick={handleLogin}>Войти</Button>
+          )}
         </div>
       </div>
     </header>
