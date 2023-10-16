@@ -2,6 +2,8 @@ import React, { ChangeEvent, FC, useState } from "react";
 
 type TInput = {
   value: string;
+  type: string;
+  name: string;
   label: string;
   placeholder: string;
   noticeTxt: string;
@@ -10,6 +12,8 @@ type TInput = {
 
 const Input: FC<TInput> = ({
   value,
+  type,
+  name,
   label,
   placeholder,
   noticeTxt,
@@ -42,8 +46,8 @@ const Input: FC<TInput> = ({
         <span className="input__star">*</span>
       </label>
       <input
-        name="mail"
-        type="mail"
+        name={name}
+        type={type}
         value={value}
         onChange={handleChange}
         placeholder={isPlaceholderShown ? `Начните вводить ${placeholder}` : ""}
