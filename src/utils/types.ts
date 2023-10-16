@@ -1,4 +1,5 @@
 export type TButton = React.PropsWithChildren & {
+  type: "button" | "submit";
   isDisabled?: boolean;
   handleClick: () => void;
 };

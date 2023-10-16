@@ -6,7 +6,7 @@ import { currentMonth, currentYear } from "./utils/contstants";
 import { TEvent } from "./utils/types";
 import Calendar from "./components/Calendar";
 import { api } from "./utils/api";
-import Popup from "./components/Popup";
+import PopupAuth from "./components/PopupAuth";
 
 const App: FC = () => {
   moment.updateLocale("ru", {
@@ -22,17 +22,6 @@ const App: FC = () => {
   const [monthOverlap, setMonthOverlap] = useState<number>(0);
 
   const [events, setEvents] = useState<TEvent[]>([]);
-
-  // Переменные попапа
-  const [isAuthPopupOpen, setIsAuthPopupOpen] = useState<boolean>(false);
-
-  function handlePopupOpen() {
-    setIsAuthPopupOpen(true);
-  }
-
-  function handlePopupClose() {
-    setIsAuthPopupOpen(false);
-  }
 
   // функции для переключения месяцев с ограничением в полгода
   function increaseMonthOverlap() {
@@ -105,7 +94,6 @@ const App: FC = () => {
       <Header
         onPrevMonth={decreaseMonthOverlap}
         onNextMonth={increaseMonthOverlap}
-        handleLogin={handlePopupOpen}
         month={month}
         year={year}
         isLogged={false}
@@ -119,7 +107,7 @@ const App: FC = () => {
           />
         </div>
       </section>
-      <Popup isOpen={isAuthPopupOpen} closePopup={handlePopupClose} />
+      <PopupAuth />
     </div>
   );
 };

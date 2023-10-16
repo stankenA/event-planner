@@ -1,12 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, MouseEvent } from "react";
 import { TButton } from "../../utils/types";
 
-const Button: FC<TButton> = ({ children, isDisabled, handleClick }) => {
+const Button: FC<TButton> = ({ children, type, isDisabled, handleClick }) => {
+  function click(evt: MouseEvent<HTMLButtonElement>) {
+    evt.preventDefault();
+    handleClick();
+  }
+
   return (
     <button
-      type="button"
+      type={type}
       className={`button ${isDisabled ? "button_disabled" : ""}`}
-      onClick={handleClick}
+      onClick={click}
+      disabled={isDisabled}
     >
       {children}
     </button>

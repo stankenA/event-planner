@@ -4,11 +4,12 @@ import Button from "./ui/Button";
 import { months } from "../utils/contstants";
 
 import userAvatar from "../images/user-avatar-default.png";
+import { useDispatch } from "react-redux";
+import { setIsPopupOpened } from "../redux/authPopup/slice";
 
 type THeaderProps = {
   onPrevMonth: () => void;
   onNextMonth: () => void;
-  handleLogin: () => void;
   month: number;
   year: number;
   isLogged: boolean;
@@ -17,11 +18,16 @@ type THeaderProps = {
 const Header: FC<THeaderProps> = ({
   onPrevMonth,
   onNextMonth,
-  handleLogin,
   month,
   year,
   isLogged,
 }) => {
+  const dispatch = useDispatch();
+
+  function openAuthPopup() {
+    dispatch(setIsPopupOpened(true));
+  }
+
   return (
     <header className="header">
       <div className="header__wrapper">
@@ -58,7 +64,7 @@ const Header: FC<THeaderProps> = ({
           </div>
           {isLogged ? (
             <div className="header__user-info">
-              <Button handleClick={() => console.log("boop")}>
+              <Button type="button" handleClick={() => console.log("boop")}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="22"
@@ -83,7 +89,9 @@ const Header: FC<THeaderProps> = ({
               </div>
             </div>
           ) : (
-            <Button handleClick={handleLogin}>Войти</Button>
+            <Button type="button" handleClick={openAuthPopup}>
+              Войти
+            </Button>
           )}
         </div>
       </div>

@@ -1,41 +1,57 @@
-import React, { FC, PropsWithChildren, useEffect, useRef } from "react";
+import React, {
+  FC,
+  MouseEventHandler,
+  PropsWithChildren,
+  useEffect,
+} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { setIsPopupOpened } from "../redux/authPopup/slice";
 
-type TPopup = PropsWithChildren & {
-  isOpen: boolean;
-  closePopup: () => void;
-};
-
-const Popup: FC<TPopup> = ({ children, isOpen, closePopup }) => {
-  const popupRef = useRef<HTMLDialogElement>(null);
-
-  function openModal() {
-    popupRef.current?.showModal();
-  }
+const Popup: FC<PropsWithChildren> = ({ children }) => {
+  const dispatch = useDispatch();
+  const isPopupOpened = useSelector(
+    (state: RootState) => state.authPopup.isPopupOpened
+  );
 
   function closeModal() {
-    popupRef.current?.close();
-    closePopup();
+    dispatch(setIsPopupOpened(false));
+  }
+
+  function closeOnBg(evt: any) {
+    if ((evt.target as Element).classList.contains("popup_opened")) {
+      closeModal();
+    }
   }
 
   useEffect(() => {
-    if (isOpen) {
-      openModal();
-    } else {
-      closeModal();
+    function closeOnEsc(evt: KeyboardEvent) {
+      if (evt.key === "Escape") {
+        closeModal();
+      }
     }
-  }, [isOpen]);
+
+    if (isPopupOpened) {
+      document.addEventListener("keydown", closeOnEsc);
+    }
+
+    return () => document.removeEventListener("keydown", closeOnEsc);
+  }, [isPopupOpened]);
 
   return (
-    <dialog className="popup" ref={popupRef}>
+    <div
+      className={`popup ${isPopupOpened ? "popup_opened" : ""}`}
+      onMouseDown={closeOnBg}
+    >
       <div className="popup__wrapper">
-        {children}
         <button
           type="button"
           className="popup__close"
           onClick={closeModal}
         ></button>
+        {children}
       </div>
-    </dialog>
+    </div>
   );
 };
 

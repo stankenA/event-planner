@@ -8,6 +8,10 @@ class API {
   }
 
   _checkResponse(res) {
+    if (res.status === 204) {
+      return;
+    }
+
     if (res.ok) {
       return res.json();
     }

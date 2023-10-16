@@ -20,8 +20,14 @@
     background-color: var(--main-colors-accent, #f51b1b);
   }
 
+  &:focus-visible {
+    outline: none;
+    background-color: var(--main-colors-accent, #f51b1b);
+  }
+
   &_disabled {
     background-color: var(--system-colors-element, #efefef);
     color: var(--Gray, #b3b3bc);
+    pointer-events: none;
   }
 }
