@@ -5,7 +5,7 @@ import Button from "./ui/Button";
 import { useForm } from "../hooks/useForm";
 import { api } from "../utils/api";
 import { useDispatch } from "react-redux";
-import { setIsAuthPopupOpened } from "../redux/authPopup/slice";
+import { setIsAuthPopupOpened } from "../redux/popups/slice";
 import { setUser } from "../redux/user/slice";
 
 const PopupAuth: FC = () => {
@@ -62,7 +62,7 @@ const PopupAuth: FC = () => {
     <Popup>
       <form className="popup__form">
         <h3 className="popup__title">Вход</h3>
-        {/* Проверки ниже нужны из-за особенности Реакта, ибо если оставить тернарный оператор, то Реакт вместо полноценного цикла маунтинга/анмаунтинга будет думать, что это один и тот же элемент и произойдёт процесс React Reconciliation, из-за чего их стейты меняться не будут */}
+        {/* Проверки ниже нужны из-за особенности Реакта, ибо если оставить тернарный оператор, то Реакт вместо полноценного цикла маунтинга/анмаунтинга будет думать, что это один и тот же элемент и произойдёт процесс Reconciliation, из-за чего их стейты меняться не будут */}
         {isMailExisting ? (
           <Input
             value={values.password}

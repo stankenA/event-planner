@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import authPopupSlice from "./authPopup/slice";
+import popupsSlice from "./popups/slice";
 import datesSlice from "./dates/slice";
 import userSlice from "./user/slice";
 
 export const store = configureStore({
   reducer: {
-    authPopup: authPopupSlice,
+    authPopup: popupsSlice,
     dates: datesSlice,
     user: userSlice,
   },

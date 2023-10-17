@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { setIsAuthPopupOpened } from "../redux/authPopup/slice";
+import { setIsAuthPopupOpened } from "../redux/popups/slice";
 
 const Popup: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();

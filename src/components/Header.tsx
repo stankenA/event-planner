@@ -5,7 +5,7 @@ import { months } from "../utils/contstants";
 
 import userAvatar from "../images/user-avatar-default.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsAuthPopupOpened } from "../redux/authPopup/slice";
+import { setIsAuthPopupOpened } from "../redux/popups/slice";
 import {
   decreaseMonthOverlap,
   increaseMonthOverlap,
