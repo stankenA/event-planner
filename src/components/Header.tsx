@@ -5,7 +5,7 @@ import { months } from "../utils/contstants";
 
 import userAvatar from "../images/user-avatar-default.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsPopupOpened } from "../redux/authPopup/slice";
+import { setIsAuthPopupOpened } from "../redux/authPopup/slice";
 import {
   decreaseMonthOverlap,
   increaseMonthOverlap,
@@ -21,7 +21,7 @@ const Header: FC<THeaderProps> = () => {
   const year = useSelector((state: RootState) => state.dates.year);
 
   function openAuthPopup() {
-    dispatch(setIsPopupOpened(true));
+    dispatch(setIsAuthPopupOpened(true));
   }
 
   function onPrevMonth() {

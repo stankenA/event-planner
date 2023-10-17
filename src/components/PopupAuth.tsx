@@ -5,7 +5,7 @@ import Button from "./ui/Button";
 import { useForm } from "../hooks/useForm";
 import { api } from "../utils/api";
 import { useDispatch } from "react-redux";
-import { setIsPopupOpened } from "../redux/authPopup/slice";
+import { setIsAuthPopupOpened } from "../redux/authPopup/slice";
 import { setUser } from "../redux/user/slice";
 
 const PopupAuth: FC = () => {
@@ -17,8 +17,6 @@ const PopupAuth: FC = () => {
     email: "",
     password: "",
   });
-
-  console.log(values);
 
   async function checkMail() {
     setIsButtonDisabled(true);
@@ -44,7 +42,7 @@ const PopupAuth: FC = () => {
         localStorage.setItem("jwt", response.jwt);
       }
       dispatch(setUser(response.user));
-      dispatch(setIsPopupOpened(false));
+      dispatch(setIsAuthPopupOpened(false));
     } catch (error) {
       console.log(error);
     } finally {

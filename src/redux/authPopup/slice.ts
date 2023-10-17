@@ -1,23 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type TAuthPopupType = {
-  isPopupOpened: boolean;
+  isAuthPopupOpened: boolean;
 };
 
 export const initialState: TAuthPopupType = {
-  isPopupOpened: true,
+  isAuthPopupOpened: true,
 };
 
 export const authPopupSlice = createSlice({
   name: "authPopup",
   initialState,
   reducers: {
-    setIsPopupOpened(state, action: PayloadAction<boolean>) {
-      state.isPopupOpened = action.payload;
+    setIsAuthPopupOpened(state, action: PayloadAction<boolean>) {
+      state.isAuthPopupOpened = action.payload;
     },
   },
 });
 
-export const { setIsPopupOpened } = authPopupSlice.actions;
+export const { setIsAuthPopupOpened } = authPopupSlice.actions;
 
 export default authPopupSlice.reducer;

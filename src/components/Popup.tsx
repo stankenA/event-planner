@@ -6,16 +6,16 @@ import React, {
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { setIsPopupOpened } from "../redux/authPopup/slice";
+import { setIsAuthPopupOpened } from "../redux/authPopup/slice";
 
 const Popup: FC<PropsWithChildren> = ({ children }) => {
   const dispatch = useDispatch();
   const isPopupOpened = useSelector(
-    (state: RootState) => state.authPopup.isPopupOpened
+    (state: RootState) => state.authPopup.isAuthPopupOpened
   );
 
   function closeModal() {
-    dispatch(setIsPopupOpened(false));
+    dispatch(setIsAuthPopupOpened(false));
   }
 
   function closeOnBg(evt: any) {

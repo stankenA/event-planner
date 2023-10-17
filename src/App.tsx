@@ -77,8 +77,6 @@ const App: FC = () => {
     getEvents();
   }, [calendarDates]);
 
-  console.log(events);
-
   return (
     <div className="page">
       <Header />
