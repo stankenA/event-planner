@@ -66,7 +66,6 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
 
     try {
       const response = await api.login(values.email, values.password);
-      console.log(response);
 
       if (response.jwt) {
         localStorage.setItem("jwt", response.jwt);
@@ -109,7 +108,7 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
           label="E-mail"
           type="email"
           name="email"
-          placeholder="E-mail"
+          placeholder="Начните вводить E-mail"
           required={true}
           noticeTxt={noticeTxt}
           handleChange={handleChange}
@@ -122,7 +121,7 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
           label="Пароль"
           type="password"
           name="password"
-          placeholder="Пароль"
+          placeholder="Начните воодить пароль"
           required={true}
           noticeTxt={noticeTxt}
           handleChange={handleChange}
