@@ -7,6 +7,7 @@ type TInput = {
   label: string;
   placeholder: string;
   noticeTxt: string;
+  required: boolean;
   handleChange: (evt: ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -16,6 +17,7 @@ const Input: FC<TInput> = ({
   name,
   label,
   placeholder,
+  required,
   noticeTxt,
   handleChange,
 }) => {
@@ -59,6 +61,7 @@ const Input: FC<TInput> = ({
       </label>
       <input
         name={name}
+        required={required}
         type={inputType}
         value={value}
         onChange={handleChange}

@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import Input from "./ui/Input";
 import Button from "./ui/Button";
-import { useForm } from "../hooks/useForm";
+import { useFormWithValidation } from "../hooks/useFormWithValidation";
 import { api } from "../utils/api";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/user/slice";
@@ -17,10 +17,11 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [noticeTxt, setNoticeTxt] = useState("");
 
-  const { values, handleChange, setValues } = useForm({
-    email: "",
-    password: "",
-  });
+  const { values, handleChange, errors, isValid, setValues, resetForm } =
+    useFormWithValidation({
+      email: "",
+      password: "",
+    });
 
   async function checkMail() {
     setIsButtonDisabled(true);
@@ -32,6 +33,15 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
     } finally {
       setIsButtonDisabled(false);
     }
+  }
+
+  function handleEmailClick() {
+    if (!isValid) {
+      setNoticeTxt(errors.email);
+      return;
+    }
+
+    checkMail();
   }
 
   async function authorize() {
@@ -72,6 +82,7 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
           type="email"
           name="email"
           placeholder="E-mail"
+          required={true}
           noticeTxt={noticeTxt}
           handleChange={handleChange}
         />
@@ -84,6 +95,7 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
           type="password"
           name="password"
           placeholder="Пароль"
+          required={true}
           noticeTxt={noticeTxt}
           handleChange={handleChange}
         />
@@ -100,7 +112,7 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
       ) : (
         <Button
           type="submit"
-          handleClick={checkMail}
+          handleClick={handleEmailClick}
           isDisabled={isButtonDisabled}
         >
           Далее
