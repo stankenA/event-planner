@@ -5,8 +5,9 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 
-const CalendarCell: FC<TCalendarCellProps> = ({ date, events }) => {
-  const month = useSelector((state: RootState) => state.dates.month);
+const CalendarCell: FC<TCalendarCellProps> = ({ date, month, events }) => {
+  // const month = useSelector((state: RootState) => state.dates.month);
+  // const events = useSelector((state: RootState) => state.events.events);
 
   function isDateInRange(startEventDate: string, endEventDate?: string | null) {
     if (endEventDate) {
@@ -31,7 +32,7 @@ const CalendarCell: FC<TCalendarCellProps> = ({ date, events }) => {
       }`}
     >
       <p className="calendar__date">{`${cellDay}`}</p>
-      {events.map((event) => {
+      {/* {events.map((event) => {
         if (isDateInRange(event.dateStart, event.dateEnd)) {
           return (
             <EventBadge
@@ -43,7 +44,7 @@ const CalendarCell: FC<TCalendarCellProps> = ({ date, events }) => {
           );
         }
         return "";
-      })}
+      })} */}
     </li>
   );
 };

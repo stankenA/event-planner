@@ -5,31 +5,29 @@ import { months } from "../utils/contstants";
 
 import userAvatar from "../images/user-avatar-default.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsPopupOpened } from "../redux/authPopup/slice";
+import { setIsAuthPopupOpened } from "../redux/authPopup/slice";
+import { RootState } from "../redux/store";
+import { THeaderProps } from "../utils/types";
 import {
   decreaseMonthOverlap,
   increaseMonthOverlap,
 } from "../redux/dates/slice";
-import { RootState } from "../redux/store";
 
-type THeaderProps = {
-  isLogged: boolean;
-};
-
-const Header: FC<THeaderProps> = ({ isLogged }) => {
+const Header: FC<THeaderProps> = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const month = useSelector((state: RootState) => state.dates.month);
   const year = useSelector((state: RootState) => state.dates.year);
 
   function openAuthPopup() {
-    dispatch(setIsPopupOpened(true));
+    dispatch(setIsAuthPopupOpened(true));
   }
 
-  function onPrevMonth() {
+  function clickPrevMonth() {
     dispatch(decreaseMonthOverlap());
   }
 
-  function onNextMonth() {
+  function clickNextMonth() {
     dispatch(increaseMonthOverlap());
   }
 
@@ -59,15 +57,15 @@ const Header: FC<THeaderProps> = ({ isLogged }) => {
             <button
               type="button"
               className="header__nav-btn header__nav-btn_prev"
-              onClick={onPrevMonth}
+              onClick={clickPrevMonth}
             ></button>
             <button
               type="button"
               className="header__nav-btn header__nav-btn_next"
-              onClick={onNextMonth}
+              onClick={clickNextMonth}
             ></button>
           </div>
-          {isLogged ? (
+          {user.id ? (
             <div className="header__user-info">
               <Button type="button" handleClick={() => console.log("boop")}>
                 <svg
@@ -78,8 +76,8 @@ const Header: FC<THeaderProps> = ({ isLogged }) => {
                   fill="none"
                 >
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M13 1L9 1V9.00001L1.00001 9.00001L1.00001 13L9 13V21L13 21L13 13L21 13L21 9.00001L13 9.00001L13 1Z"
                     fill="white"
                   />
