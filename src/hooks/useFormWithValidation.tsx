@@ -14,12 +14,11 @@ export function useFormWithValidation(inputValues: TValues) {
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
+    const name = event.target.name;
+    const value = event.target.value;
     setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form")!.checkValidity());
+    setErrors({ ...errors, [name]: event.target.validationMessage });
+    setIsValid(event.target.closest("form")!.checkValidity());
   };
 
   const resetForm = useCallback(
@@ -31,5 +30,12 @@ export function useFormWithValidation(inputValues: TValues) {
     [setValues, setErrors, setIsValid]
   );
 
-  return { values, handleChange, errors, isValid, setValues, resetForm };
+  return {
+    values,
+    handleChange,
+    errors,
+    isValid,
+    setValues,
+    resetForm,
+  };
 }
