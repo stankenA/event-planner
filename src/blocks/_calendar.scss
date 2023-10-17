@@ -19,6 +19,14 @@
     gap: 1px;
     position: relative;
     overflow: hidden;
+
+    @media screen and (max-width: 1279px) {
+      overflow-x: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
   }
 
   &__cell {
@@ -73,6 +81,15 @@
     text-wrap: nowrap;
     text-overflow: ellipsis;
     max-width: 204px;
+
+    @media screen and (max-width: 1919px) {
+      max-width: 150px;
+      font-size: 18px;
+    }
+
+    @media screen and (max-width: 1439px) {
+      max-width: 120px;
+    }
 
     &_inactive {
       color: var(--Gray, #b3b3bc);

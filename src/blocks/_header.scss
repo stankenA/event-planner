@@ -34,6 +34,10 @@
     line-height: 120%;
     letter-spacing: -2.56px;
     margin: 0;
+
+    @media screen and (max-width: 1439px) {
+      font-size: 55px;
+    }
   }
 
   &__title-accent {

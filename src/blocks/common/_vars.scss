@@ -5,4 +5,8 @@
   --main-colors-black: #0d0c0c;
   --system-colors-element: #efefef;
   --Gray: #b3b3bc;
+
+  @media screen and (max-width: 1919px) {
+    --content-width: 96%;
+  }
 }
