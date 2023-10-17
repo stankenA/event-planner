@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import "./App.scss";
 import Header from "./components/Header";
 import moment from "moment";
-import { currentMonth, currentYear } from "./utils/contstants";
 import { TEvent } from "./utils/types";
 import Calendar from "./components/Calendar";
 import { api } from "./utils/api";
