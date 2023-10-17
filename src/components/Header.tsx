@@ -12,12 +12,11 @@ import {
 } from "../redux/dates/slice";
 import { RootState } from "../redux/store";
 
-type THeaderProps = {
-  isLogged: boolean;
-};
+type THeaderProps = {};
 
-const Header: FC<THeaderProps> = ({ isLogged }) => {
+const Header: FC<THeaderProps> = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const month = useSelector((state: RootState) => state.dates.month);
   const year = useSelector((state: RootState) => state.dates.year);
 
@@ -67,7 +66,7 @@ const Header: FC<THeaderProps> = ({ isLogged }) => {
               onClick={onNextMonth}
             ></button>
           </div>
-          {isLogged ? (
+          {user.isAuth ? (
             <div className="header__user-info">
               <Button type="button" handleClick={() => console.log("boop")}>
                 <svg

@@ -4,8 +4,12 @@ import Input from "./ui/Input";
 import Button from "./ui/Button";
 import { useForm } from "../hooks/useForm";
 import { api } from "../utils/api";
+import { useDispatch } from "react-redux";
+import { setIsPopupOpened } from "../redux/authPopup/slice";
+import { setUser } from "../redux/user/slice";
 
 const PopupAuth: FC = () => {
+  const dispatch = useDispatch();
   const [isMailExisting, setIsMailExisting] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [noticeTxt, setNoticeTxt] = useState("");
@@ -39,6 +43,8 @@ const PopupAuth: FC = () => {
       if (response.jwt) {
         localStorage.setItem("jwt", response.jwt);
       }
+      dispatch(setUser(response.user));
+      dispatch(setIsPopupOpened(false));
     } catch (error) {
       console.log(error);
     } finally {

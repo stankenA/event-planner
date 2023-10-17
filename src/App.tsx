@@ -81,7 +81,7 @@ const App: FC = () => {
 
   return (
     <div className="page">
-      <Header isLogged={false} />
+      <Header />
       <section className="calendar">
         <div className="calendar__wrapper">
           <Calendar calendarDates={calendarDates} events={events} />
