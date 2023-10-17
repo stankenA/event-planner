@@ -5,7 +5,7 @@ type TAuthPopupType = {
 };
 
 export const initialState: TAuthPopupType = {
-  isAuthPopupOpened: true,
+  isAuthPopupOpened: false,
 };
 
 export const authPopupSlice = createSlice({

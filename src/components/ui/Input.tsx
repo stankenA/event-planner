@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from "react";
+import React, { ChangeEvent, FC, useEffect, useState } from "react";
 
 type TInput = {
   value: string;
@@ -21,6 +21,8 @@ const Input: FC<TInput> = ({
 }) => {
   const [isLabelFocused, setIsLabelFocused] = useState(false);
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(false);
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [inputType, setInputType] = useState(type);
 
   function focusLabel() {
     setIsLabelFocused(true);
@@ -34,10 +36,20 @@ const Input: FC<TInput> = ({
     }
   }
 
+  function togglePasswordVisibility() {
+    if (!isPasswordShown) {
+      setInputType("text");
+    } else {
+      setInputType("password");
+    }
+
+    setIsPasswordShown(!isPasswordShown);
+  }
+
   return (
     <div className={`input ${noticeTxt?.length > 0 ? "input_notice" : ""}`}>
       <label
-        htmlFor="mail"
+        htmlFor={name}
         className={`input__label ${
           isLabelFocused ? "input__label_focused" : ""
         }`}
@@ -47,7 +59,7 @@ const Input: FC<TInput> = ({
       </label>
       <input
         name={name}
-        type={type}
+        type={inputType}
         value={value}
         onChange={handleChange}
         placeholder={isPlaceholderShown ? `Начните вводить ${placeholder}` : ""}
@@ -55,6 +67,15 @@ const Input: FC<TInput> = ({
         onFocus={focusLabel}
         onBlur={unfocusLabel}
       />
+      {type === "password" ? (
+        <button
+          type="button"
+          className={`input__eye ${isPasswordShown ? "input__eye_opened" : ""}`}
+          onClick={togglePasswordVisibility}
+        ></button>
+      ) : (
+        ""
+      )}
       <span className="input__notice">{noticeTxt}</span>
     </div>
   );

@@ -91,4 +91,23 @@
     visibility: hidden;
     @include transition;
   }
+
+  &__eye {
+    @include reset-btn;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../../images/eye-closed.svg);
+    cursor: pointer;
+
+    &_opened {
+      background-image: url(../../images/eye-opened.svg);
+    }
+  }
 }

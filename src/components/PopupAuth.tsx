@@ -62,6 +62,7 @@ const PopupAuth: FC = () => {
     <Popup>
       <form className="popup__form">
         <h3 className="popup__title">Вход</h3>
+        {/* Проверки ниже нужны из-за особенности Реакта, ибо если оставить тернарный оператор, то Реакт вместо полноценного цикла маунтинга/анмаунтинга будет думать, что это один и тот же элемент и произойдёт процесс React Reconciliation, из-за чего их стейты меняться не будут */}
         {isMailExisting ? (
           <Input
             value={values.password}
@@ -72,7 +73,8 @@ const PopupAuth: FC = () => {
             noticeTxt={noticeTxt}
             handleChange={handleChange}
           />
-        ) : (
+        ) : null}
+        {!isMailExisting ? (
           <Input
             value={values.email}
             label="E-mail"
@@ -82,7 +84,7 @@ const PopupAuth: FC = () => {
             noticeTxt={noticeTxt}
             handleChange={handleChange}
           />
-        )}
+        ) : null}
         {isMailExisting ? (
           <Button
             type="submit"
