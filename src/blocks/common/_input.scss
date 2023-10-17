@@ -15,6 +15,10 @@
       opacity: 1;
       visibility: visible;
     }
+
+    .input__clear-btn {
+      background-image: url(../../images/cross-icon-red.svg);
+    }
   }
 
   &__element {
@@ -108,6 +112,31 @@
 
     &_opened {
       background-image: url(../../images/eye-opened.svg);
+    }
+  }
+
+  &__clear-btn {
+    @include reset-btn;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    transform-origin: 50% 0;
+    background: url(../../images/cross-icon.svg) no-repeat center / 14px 14px;
+    cursor: pointer;
+    @include transition(0.1s);
+    opacity: 0;
+    visibility: hidden;
+
+    &:hover {
+      // opacity: 0.6;
+    }
+
+    &_visible {
+      opacity: 1;
+      visibility: visible;
     }
   }
 }

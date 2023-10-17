@@ -18,10 +18,11 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
   const [noticeTxt, setNoticeTxt] = useState("");
 
   // Хук для сбора данных с формы и их валидации
-  const { values, handleChange, errors, isValid } = useFormWithValidation({
-    email: "",
-    password: "",
-  });
+  const { values, handleChange, errors, isValid, setValues, resetErrors } =
+    useFormWithValidation({
+      email: "",
+      password: "",
+    });
 
   // Запрос на бэк для проверки почты
   async function checkMail() {
@@ -39,6 +40,12 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
     } finally {
       setIsButtonDisabled(false);
     }
+  }
+
+  // Очистка поля E-mail
+  function handleEmailClear() {
+    resetErrors();
+    setValues({ ...values, email: "" });
   }
 
   // Функция клика по кнопке далее при вводе поля E-mail
@@ -99,7 +106,6 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
       {/* Проверки ниже нужны из-за особенности Реакта, ибо если оставить тернарный оператор, то Реакт вместо полноценного цикла маунтинга/анмаунтинга будет думать, что это один и тот же элемент и произойдёт процесс Reconciliation, из-за чего их стейты меняться не будут */}
       {!isMailExisting ? (
         <Input
-          value={values.email}
           label="E-mail"
           type="email"
           name="email"
@@ -107,12 +113,12 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
           required={true}
           noticeTxt={noticeTxt}
           handleChange={handleChange}
+          handleClear={handleEmailClear}
         />
       ) : null}
 
       {isMailExisting ? (
         <Input
-          value={values.password}
           label="Пароль"
           type="password"
           name="password"

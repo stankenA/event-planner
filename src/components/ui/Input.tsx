@@ -1,7 +1,6 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { ChangeEvent, FC, useState } from "react";
 
 type TInput = {
-  value: string;
   type: string;
   name: string;
   label: string;
@@ -9,10 +8,10 @@ type TInput = {
   noticeTxt: string;
   required: boolean;
   handleChange: (evt: ChangeEvent<HTMLInputElement>) => void;
+  handleClear?: () => void;
 };
 
 const Input: FC<TInput> = ({
-  value,
   type,
   name,
   label,
@@ -20,11 +19,23 @@ const Input: FC<TInput> = ({
   required,
   noticeTxt,
   handleChange,
+  handleClear,
 }) => {
+  const [inputValue, setInputValue] = useState("");
   const [isLabelFocused, setIsLabelFocused] = useState(false);
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [inputType, setInputType] = useState(type);
+
+  function handleInputChange(evt: ChangeEvent<HTMLInputElement>) {
+    setInputValue(evt.target.value);
+    handleChange(evt);
+  }
+
+  function handleInputClear() {
+    handleClear!();
+    setInputValue("");
+  }
 
   function focusLabel() {
     setIsLabelFocused(true);
@@ -32,7 +43,7 @@ const Input: FC<TInput> = ({
   }
 
   function unfocusLabel() {
-    if (!value) {
+    if (!inputValue) {
       setIsLabelFocused(false);
       setIsPlaceholderShown(false);
     }
@@ -49,7 +60,7 @@ const Input: FC<TInput> = ({
   }
 
   return (
-    <div className={`input ${noticeTxt?.length > 0 ? "input_notice" : ""}`}>
+    <div className={`input ${noticeTxt.length > 0 ? "input_notice" : ""}`}>
       <label
         htmlFor={name}
         className={`input__label ${
@@ -63,8 +74,8 @@ const Input: FC<TInput> = ({
         name={name}
         required={required}
         type={inputType}
-        value={value}
-        onChange={handleChange}
+        value={inputValue}
+        onChange={handleInputChange}
         placeholder={isPlaceholderShown ? `Начните вводить ${placeholder}` : ""}
         className="input__element"
         onFocus={focusLabel}
@@ -76,8 +87,14 @@ const Input: FC<TInput> = ({
           className={`input__eye ${isPasswordShown ? "input__eye_opened" : ""}`}
           onClick={togglePasswordVisibility}
         ></button>
-      ) : (
-        ""
+      ) : type === "calendar" ? null : (
+        <button
+          type="button"
+          className={`input__clear-btn ${
+            inputValue ? "input__clear-btn_visible" : ""
+          }`}
+          onClick={handleInputClear}
+        ></button>
       )}
       <span className="input__notice">{noticeTxt}</span>
     </div>

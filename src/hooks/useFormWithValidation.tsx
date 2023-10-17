@@ -30,6 +30,10 @@ export function useFormWithValidation(inputValues: TValues) {
     [setValues, setErrors, setIsValid]
   );
 
+  const resetErrors = () => {
+    setErrors({});
+  };
+
   return {
     values,
     handleChange,
@@ -37,5 +41,6 @@ export function useFormWithValidation(inputValues: TValues) {
     isValid,
     setValues,
     resetForm,
+    resetErrors,
   };
 }
