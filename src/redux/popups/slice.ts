@@ -11,7 +11,7 @@ export const initialState: TPopupsSlice = {
 };
 
 export const popupsSlice = createSlice({
-  name: "authPopup",
+  name: "popups",
   initialState,
   reducers: {
     setIsAuthPopupOpened(state, action: PayloadAction<boolean>) {

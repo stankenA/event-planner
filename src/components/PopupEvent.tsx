@@ -10,7 +10,7 @@ const PopupEvent = () => {
 
   return (
     <Popup isOpened={isEventPopupOpened}>
-      <div className="popup__wrapper"></div>
+      <div className="popup__wrapper popup__wrapper_large"></div>
     </Popup>
   );
 };
