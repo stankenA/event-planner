@@ -2,14 +2,22 @@ import React from "react";
 import Popup from "./Popup";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import participantImg from "../images/participant-img.png";
+import participantImg from "../images/user-avatar-default.png";
 import Participant from "./Participant";
+import moment from "moment";
+import { weekdays } from "../utils/contstants";
 
 const PopupEvent = () => {
+  const event = useSelector((state: RootState) => state.event);
   const isEventPopupOpened = useSelector(
     (state: RootState) => state.popups.isEventPopupOpened
   );
-  const event = useSelector((state: RootState) => state.event);
+
+  const date = moment(event.dateStart);
+  const day = date.date();
+  const dayOfWeek = date.weekday();
+  const hour = date.hour();
+  const minutes = date.minutes();
 
   return (
     <Popup isOpened={isEventPopupOpened} isLarge={true}>
@@ -17,9 +25,12 @@ const PopupEvent = () => {
       <div className="event">
         <div className="event__box">
           <div className="event__date">
-            <p className="event__txt-bold">пятница {event.dateStart}</p>
-            <p className="event__txt-bold">21 сентября</p>
-            <p className="event__txt-bold">12:00</p>
+            <p className="event__txt-bold">{weekdays[dayOfWeek]}</p>
+            <p className="event__txt-bold">{day} октября</p>
+            <p className="event__txt-bold">
+              {hour < 10 ? "0" + hour : hour}:
+              {minutes < 10 ? "0" + minutes : minutes}
+            </p>
           </div>
           <p className="event__address">{event.location}</p>
         </div>
@@ -29,12 +40,14 @@ const PopupEvent = () => {
         <h4 className="participants__subtitle">Участники</h4>
         <div className="participants__content">
           <ul className="participants__list">
-            <Participant name="Илья" img={participantImg} isOrganizer={true} />
-            <Participant name="Катя" img={participantImg} isOrganizer={false} />
-            <Participant name="Миша" img={participantImg} isOrganizer={false} />
-            <Participant name="Миша" img={participantImg} isOrganizer={false} />
-            <Participant name="Миша" img={participantImg} isOrganizer={false} />
-            <Participant name="Миша" img={participantImg} isOrganizer={false} />
+            {event.participants?.map((user) => (
+              <Participant
+                key={user.id}
+                name={user.username}
+                img={participantImg}
+                isOrganizer={true}
+              />
+            ))}
           </ul>
         </div>
       </div>

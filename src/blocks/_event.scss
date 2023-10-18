@@ -18,6 +18,9 @@
   &__date {
     border-bottom: 1px solid var(--system-colors-element, #efefef);
     padding-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   &__txt-bold {

@@ -13,6 +13,16 @@ export const months: string[] = [
   "Декабрь",
 ];
 
+export const weekdays: string[] = [
+  "понедельник",
+  "вторник",
+  "среда",
+  "четверг",
+  "пятнца",
+  "суббота",
+  "воскресенье",
+];
+
 export const currentDay: number = new Date().getDate();
 export const currentMonth: number = new Date().getMonth();
 export const currentYear: number = new Date().getFullYear();

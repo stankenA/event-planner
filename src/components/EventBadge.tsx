@@ -2,11 +2,13 @@ import React, { FC } from "react";
 import { TEventBadge } from "../utils/types";
 import { useDispatch } from "react-redux";
 import { setIsEventPopupOpened } from "../redux/popups/slice";
+import { setEvent } from "../redux/event/slice";
 
 const EventBadge: FC<TEventBadge> = ({ date, event, isInactive }) => {
   const dispatch = useDispatch();
 
   function handleEventClick() {
+    dispatch(setEvent(event));
     dispatch(setIsEventPopupOpened(true));
   }
 
