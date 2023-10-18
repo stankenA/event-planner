@@ -19,6 +19,5 @@ export const currentYear: number = new Date().getFullYear();
 
 export const BASE_URL: string = "http://localhost:1337/api";
 
-export const passwordRegExp: string = `^.*(?=.*[a-zA-Z])(?=.*\d).*$`;
-
-// `^.*(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&?:;,.<>@ "]).*$`
+export const passwordRegExp: RegExp =
+  /^.*(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&?:;,.<>@ "]).*$/;

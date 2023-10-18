@@ -21,7 +21,6 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
     password: "",
     passwordRepeat: "",
   });
-  const [passwordsValid, setPasswordsValid] = useState(false);
 
   // Хук для сбора данных с формы и их валидации
   const { values, handleChange, errors, isValid, setValues } =
@@ -31,13 +30,13 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
       passwordRepeat: "",
     });
 
-  console.log(values, errors);
-
   // Очитска поля имени
   function handleNameClear() {
     setValues({ ...values, name: "" });
+    setNoticeTxt({ ...noticeTxt, name: "Это поле обязательно для заполнения" });
   }
 
+  // TODO: оптимизировать валидацию формы регистрации
   function checkFormValidity() {
     let errorsObj = {
       name: "",
@@ -45,6 +44,12 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
       passwordRepeat: "",
     };
     let isFormValid = true;
+
+    if (values.password !== values.passwordRepeat) {
+      errorsObj.password = "Пароли не совпадают";
+      errorsObj.passwordRepeat = "Пароли не совпадают";
+      isFormValid = false;
+    }
 
     if (!isValid) {
       errorsObj = {
@@ -81,38 +86,45 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
       isFormValid = false;
     }
 
-    if (values.password !== values.passwordRepeat) {
-      errorsObj.password = "Пароли не совпадают";
-      errorsObj.passwordRepeat = "Пароли не совпадают";
-      setPasswordsValid(false);
+    if (!passwordRegExp.test(values.password)) {
+      errorsObj = {
+        ...errorsObj,
+        password: "Используйте латинские буквы, цифры и спец символы",
+      };
       isFormValid = false;
-    } else {
-      setPasswordsValid(true);
     }
 
     setNoticeTxt(errorsObj);
     return isFormValid;
   }
 
+  // Регистрация пользователя
+  async function registerUser() {
+    setIsButtonDisabled(true);
+    try {
+      const response = await api.register(
+        values.name,
+        userEmail,
+        values.password
+      );
+
+      if (response.jwt) {
+        localStorage.setItem("jwt", response.jwt);
+      }
+      dispatch(setUser(response.user));
+      dispatch(setIsAuthPopupOpened(false));
+    } catch (error) {
+      setNoticeTxt({
+        ...noticeTxt,
+        name: "Что-то пошло не так, попробуйте позже",
+      });
+    } finally {
+      setIsButtonDisabled(false);
+    }
+  }
+
   // Клик по кнопке Зарегистрироваться
   function handleSubmitClick() {
-    async function registerUser() {
-      try {
-        const response = await api.register(
-          values.name,
-          userEmail,
-          values.password
-        );
-
-        if (response.jwt) {
-          localStorage.setItem("jwt", response.jwt);
-        }
-        dispatch(setUser(response.user));
-        dispatch(setIsAuthPopupOpened(false));
-      } catch (error) {
-        console.log(error);
-      }
-    }
     if (checkFormValidity()) {
       registerUser();
     }
@@ -150,10 +162,8 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
           noticeTxt={noticeTxt.password}
           required={true}
           handleChange={handleChange}
-          isValid={passwordsValid}
           minLength={8}
           maxLength={32}
-          pattern={passwordRegExp}
         />
         <Input
           type="password"
@@ -163,10 +173,6 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
           noticeTxt={noticeTxt.passwordRepeat}
           required={true}
           handleChange={handleChange}
-          isValid={passwordsValid}
-          minLength={8}
-          maxLength={32}
-          pattern={passwordRegExp}
         />
       </fieldset>
       <Button
