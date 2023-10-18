@@ -9,9 +9,10 @@ import { closeAllPopups } from "../redux/popups/slice";
 
 type TPopupProps = PropsWithChildren & {
   isOpened: boolean;
+  isLarge?: boolean;
 };
 
-const Popup: FC<TPopupProps> = ({ children, isOpened }) => {
+const Popup: FC<TPopupProps> = ({ children, isOpened, isLarge }) => {
   const dispatch = useDispatch();
 
   function closeModal() {
@@ -40,10 +41,13 @@ const Popup: FC<TPopupProps> = ({ children, isOpened }) => {
 
   return (
     <div
-      className={`popup ${isOpened ? "popup_opened" : ""}`}
+      className={`popup 
+      ${isOpened ? "popup_opened" : ""}`}
       onMouseDown={closeOnBg}
     >
-      <div className="popup__wrapper">
+      <div
+        className={`popup__wrapper ${isLarge ? "popup__wrapper_large" : ""}`}
+      >
         <button
           type="button"
           className="popup__close"

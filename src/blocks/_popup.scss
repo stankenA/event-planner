@@ -31,6 +31,11 @@
     align-items: center;
     justify-content: center;
     gap: 40px;
+
+    &_large {
+      width: 1075px;
+      justify-content: flex-start;
+    }
   }
 
   &__close {
@@ -73,7 +78,7 @@
     }
   }
 
-  &__info-container {
+  &__password-info-container {
     width: 100%;
     border-radius: 12px;
     background: var(--system-colors-bg, #fafafa);
@@ -86,7 +91,7 @@
     margin-bottom: 24px;
   }
 
-  &__info-txt {
+  &__password-info-txt {
     margin: 0;
     color: var(--main-colors-black, #0d0c0c);
     font-family: TT Commons;
