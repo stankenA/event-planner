@@ -18,7 +18,7 @@ export const initialState: TEventSlice = {
   dateEnd: undefined,
 };
 
-export const popupsSlice = createSlice({
+export const eventSlice = createSlice({
   name: "event",
   initialState,
   reducers: {
@@ -33,6 +33,6 @@ export const popupsSlice = createSlice({
   },
 });
 
-export const {} = popupsSlice.actions;
+export const {} = eventSlice.actions;
 
-export default popupsSlice.reducer;
+export default eventSlice.reducer;
