@@ -126,12 +126,14 @@ class API {
     let finalURL;
 
     if (startDate && !endDate) {
-      finalURL = `?populate=filters[dateStart][$gte]=${startDate}&filters[dateEnd][$lte]=${startDate}`;
+      finalURL = `?populate=*&filters[dateStart][$gte]=${startDate}`;
     } else if (startDate && endDate) {
-      finalURL = `?populate=filters[dateStart][$gte]=${startDate}&filters[dateEnd][$lte]=${endDate}`;
+      finalURL = `?populate=*&filters[dateStart][$gte]=${startDate}&filters[dateStart][$lte]=${endDate}`;
+    } else {
+      finalURL = "";
     }
 
-    return this._request(`events${finalURL}`, {
+    return this._request(`/events${finalURL}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

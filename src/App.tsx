@@ -9,6 +9,7 @@ import PopupAuth from "./components/PopupAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { setMonth, setYear } from "./redux/dates/slice";
+import { setUser } from "./redux/user/slice";
 
 const App: FC = () => {
   moment.updateLocale("ru", {
@@ -75,6 +76,21 @@ const App: FC = () => {
 
     getEvents();
   }, [calendarDates]);
+
+  useEffect(() => {
+    async function checkUser() {
+      try {
+        const response = await api.getCurrentUser(localStorage.getItem("jwt"));
+        dispatch(setUser(response));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (localStorage.getItem("jwt")) {
+      checkUser();
+    }
+  }, []);
 
   return (
     <div className="page">

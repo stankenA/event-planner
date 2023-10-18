@@ -18,11 +18,18 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
   const [noticeTxt, setNoticeTxt] = useState("");
 
   // Хук для сбора данных с формы и их валидации
-  const { values, handleChange, errors, isValid, setValues, resetErrors } =
-    useFormWithValidation({
-      email: "",
-      password: "",
-    });
+  const {
+    values,
+    handleChange,
+    errors,
+    isValid,
+    setValues,
+    resetErrors,
+    resetForm,
+  } = useFormWithValidation({
+    email: "",
+    password: "",
+  });
 
   // Запрос на бэк для проверки почты
   async function checkMail() {
@@ -73,6 +80,8 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
       dispatch(setUser(response.user));
       dispatch(setIsAuthPopupOpened(false));
       setNoticeTxt("");
+      setIsMailExisting(false);
+      resetForm();
     } catch (error: any) {
       if (error.status === 400) {
         setNoticeTxt("Неверный пароль");
