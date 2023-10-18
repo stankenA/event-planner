@@ -63,12 +63,12 @@ const Header: FC<THeaderProps> = () => {
           <div className="header__nav">
             <button
               type="button"
-              className="header__nav-btn header__nav-btn_prev"
+              className="header__nav-btn nav-btn nav-btn_prev"
               onClick={onPrevMonth}
             ></button>
             <button
               type="button"
-              className="header__nav-btn header__nav-btn_next"
+              className="header__nav-btn nav-btn nav-btn_next"
               onClick={onNextMonth}
             ></button>
           </div>

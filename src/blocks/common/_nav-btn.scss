@@ -1,0 +1,24 @@
+.nav-btn {
+  @include reset-btn;
+  width: 64px;
+  height: 48px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: url(../../images/arrow-black-right-icon.svg) no-repeat center /
+    32px 32px;
+  background-color: var(--system-colors-element, #efefef);
+  @include transition;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &_prev {
+    rotate: 180deg;
+  }
+
+  &_inactive {
+    background-image: url(../../images/arrow-gray-right-icon.svg);
+    pointer-events: none;
+  }
+}
