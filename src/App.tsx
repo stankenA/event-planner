@@ -77,6 +77,7 @@ const App: FC = () => {
     getEvents();
   }, [calendarDates]);
 
+  // Проверяем, сохранён ли токен в сторадже
   useEffect(() => {
     async function checkUser() {
       try {

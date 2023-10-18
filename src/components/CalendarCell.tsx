@@ -8,6 +8,7 @@ import { RootState } from "../redux/store";
 const CalendarCell: FC<TCalendarCellProps> = ({ date, events }) => {
   const month = useSelector((state: RootState) => state.dates.month);
 
+  // Попадает ли текущая дата под какое-либо событие
   function isDateInRange(startEventDate: string, endEventDate?: string | null) {
     if (endEventDate) {
       return moment(date).isBetween(startEventDate, endEventDate, "day", "[]");
@@ -16,6 +17,7 @@ const CalendarCell: FC<TCalendarCellProps> = ({ date, events }) => {
     }
   }
 
+  // Проверка, что день события уже прошёл
   function checkIsBadgeInactive(startEventDate: string) {
     return moment(date).isBetween(startEventDate, moment(), "day", "[)");
   }
@@ -42,7 +44,7 @@ const CalendarCell: FC<TCalendarCellProps> = ({ date, events }) => {
             />
           );
         }
-        return "";
+        return null;
       })}
     </li>
   );
