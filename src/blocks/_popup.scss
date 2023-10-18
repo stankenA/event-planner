@@ -63,7 +63,47 @@
   &__form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 346px;
     gap: 40px;
+
+    &_registration {
+      width: 520px;
+      gap: 0;
+    }
+  }
+
+  &__info-container {
+    width: 100%;
+    border-radius: 12px;
+    background: var(--system-colors-bg, #fafafa);
+    box-sizing: border-box;
+    padding: 8px 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__info-txt {
+    margin: 0;
+    color: var(--main-colors-black, #0d0c0c);
+    font-family: TT Commons;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+    letter-spacing: -0.28px;
+  }
+
+  &__fieldset {
+    width: 346px;
+    border: none;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 40px;
   }
 }

@@ -7,6 +7,10 @@ type TInput = {
   placeholder: string;
   noticeTxt: string;
   required: boolean;
+  minLength?: number;
+  maxLength?: number;
+  isValid?: boolean;
+  pattern?: string;
   handleChange: (evt: ChangeEvent<HTMLInputElement>) => void;
   handleClear?: () => void;
 };
@@ -18,6 +22,10 @@ const Input: FC<TInput> = ({
   placeholder,
   required,
   noticeTxt,
+  minLength,
+  maxLength,
+  isValid,
+  pattern,
   handleChange,
   handleClear,
 }) => {
@@ -27,16 +35,21 @@ const Input: FC<TInput> = ({
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [inputType, setInputType] = useState(type);
 
+  // Функция изменения значения инпута
   function handleInputChange(evt: ChangeEvent<HTMLInputElement>) {
     setInputValue(evt.target.value);
     handleChange(evt);
   }
 
+  // Очистка инпута
   function handleInputClear() {
-    handleClear!();
+    if (handleClear) {
+      handleClear();
+    }
     setInputValue("");
   }
 
+  // Является ли инпут в фокусе
   function focusLabel() {
     setIsLabelFocused(true);
     setIsPlaceholderShown(true);
@@ -49,6 +62,7 @@ const Input: FC<TInput> = ({
     }
   }
 
+  // Функция отображения/скрытия пароля
   function togglePasswordVisibility() {
     if (!isPasswordShown) {
       setInputType("text");
@@ -60,7 +74,12 @@ const Input: FC<TInput> = ({
   }
 
   return (
-    <div className={`input ${noticeTxt.length > 0 ? "input_notice" : ""}`}>
+    <div
+      className={`input 
+      ${noticeTxt ? "input_notice" : ""} 
+      ${isValid ? "input_valid" : ""}
+      `}
+    >
       <label
         htmlFor={name}
         className={`input__label ${
@@ -68,9 +87,11 @@ const Input: FC<TInput> = ({
         }`}
       >
         {label}
-        <span className="input__star">*</span>
+        {required ? <span className="input__star">*</span> : null}
       </label>
       <input
+        minLength={minLength}
+        maxLength={maxLength}
         name={name}
         required={required}
         type={inputType}
@@ -80,6 +101,7 @@ const Input: FC<TInput> = ({
         className="input__element"
         onFocus={focusLabel}
         onBlur={unfocusLabel}
+        pattern={pattern}
       />
       {type === "password" ? (
         <button

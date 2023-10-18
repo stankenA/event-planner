@@ -21,6 +21,12 @@
     }
   }
 
+  &_valid {
+    .input__element {
+      border-color: #23ae00 !important;
+    }
+  }
+
   &__element {
     border: none;
     width: 100%;

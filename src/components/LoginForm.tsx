@@ -9,9 +9,10 @@ import { setIsAuthPopupOpened } from "../redux/popups/slice";
 
 type TLoginFormProps = {
   setIsLoginForm: (state: boolean) => void;
+  setEmail: (email: string) => void;
 };
 
-const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
+const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm, setEmail }) => {
   const dispatch = useDispatch();
   const [isMailExisting, setIsMailExisting] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -41,6 +42,7 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
     } catch (error: any) {
       if (error.status === 404) {
         setIsLoginForm(false);
+        setEmail(values.email);
       } else {
         setNoticeTxt("Что-то пошло не так, попробуйте позже");
       }
@@ -134,6 +136,8 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm }) => {
           required={true}
           noticeTxt={noticeTxt}
           handleChange={handleChange}
+          minLength={8}
+          maxLength={32}
         />
       ) : null}
 
