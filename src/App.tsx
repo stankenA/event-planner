@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { setMonth, setYear } from "./redux/dates/slice";
 import { setUser } from "./redux/user/slice";
+import PopupEvent from "./components/PopupEvent";
 
 const App: FC = () => {
   moment.updateLocale("ru", {
@@ -102,6 +103,7 @@ const App: FC = () => {
         </div>
       </section>
       <PopupAuth />
+      <PopupEvent />
     </div>
   );
 };

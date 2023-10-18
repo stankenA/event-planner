@@ -6,7 +6,7 @@ import userSlice from "./user/slice";
 
 export const store = configureStore({
   reducer: {
-    authPopup: popupsSlice,
+    popups: popupsSlice,
     dates: datesSlice,
     user: userSlice,
   },

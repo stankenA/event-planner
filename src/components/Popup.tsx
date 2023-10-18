@@ -4,18 +4,18 @@ import React, {
   PropsWithChildren,
   useEffect,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { setIsAuthPopupOpened } from "../redux/popups/slice";
+import { useDispatch } from "react-redux";
+import { closeAllPopups } from "../redux/popups/slice";
 
-const Popup: FC<PropsWithChildren> = ({ children }) => {
+type TPopupProps = PropsWithChildren & {
+  isOpened: boolean;
+};
+
+const Popup: FC<TPopupProps> = ({ children, isOpened }) => {
   const dispatch = useDispatch();
-  const isPopupOpened = useSelector(
-    (state: RootState) => state.authPopup.isAuthPopupOpened
-  );
 
   function closeModal() {
-    dispatch(setIsAuthPopupOpened(false));
+    dispatch(closeAllPopups());
   }
 
   function closeOnBg(evt: any) {
@@ -31,16 +31,16 @@ const Popup: FC<PropsWithChildren> = ({ children }) => {
       }
     }
 
-    if (isPopupOpened) {
+    if (isOpened) {
       document.addEventListener("keydown", closeOnEsc);
     }
 
     return () => document.removeEventListener("keydown", closeOnEsc);
-  }, [isPopupOpened]);
+  }, [isOpened]);
 
   return (
     <div
-      className={`popup ${isPopupOpened ? "popup_opened" : ""}`}
+      className={`popup ${isOpened ? "popup_opened" : ""}`}
       onMouseDown={closeOnBg}
     >
       <div className="popup__wrapper">
