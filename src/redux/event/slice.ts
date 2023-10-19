@@ -20,6 +20,7 @@ export const initialState: TEvent = {
   createdAt: "",
   updatedAt: "",
   participants: [],
+  owner: undefined,
 };
 
 export const eventSlice = createSlice({
@@ -34,6 +35,7 @@ export const eventSlice = createSlice({
       state.location = action.payload.location;
       state.dateEnd = action.payload.dateEnd;
       state.participants = action.payload.participants;
+      state.owner = action.payload.owner;
     },
   },
 });

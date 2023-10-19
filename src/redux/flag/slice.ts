@@ -13,12 +13,12 @@ export const flagSlice = createSlice({
   name: "flag",
   initialState,
   reducers: {
-    changeFlag(state) {
+    triggerFlag(state) {
       state.flag = !state.flag;
     },
   },
 });
 
-export const { changeFlag } = flagSlice.actions;
+export const { triggerFlag } = flagSlice.actions;
 
 export default flagSlice.reducer;

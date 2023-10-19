@@ -46,3 +46,5 @@ export const BASE_URL: string = "http://localhost:1337/api";
 
 export const passwordRegExp: RegExp =
   /^.*(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&?:;,.<>@ "]).*$/;
+
+export const timeRegExp: RegExp = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;

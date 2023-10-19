@@ -12,7 +12,7 @@ type TInput = {
   maxLength?: number;
   isValid?: boolean;
   pattern?: string;
-  handleChange: (evt: ChangeEvent<HTMLInputElement>) => void;
+  handleChange?: (evt: ChangeEvent<HTMLInputElement>) => void;
   handleClear?: () => void;
 };
 
@@ -42,7 +42,9 @@ const Input: FC<TInput> = ({
   // Функция изменения значения инпута
   function handleInputChange(evt: ChangeEvent<HTMLInputElement>) {
     setInputValue(evt.target.value);
-    handleChange(evt);
+    if (handleChange) {
+      handleChange(evt);
+    }
   }
 
   // Очистка инпута
@@ -117,7 +119,7 @@ const Input: FC<TInput> = ({
           className={`input__eye ${isPasswordShown ? "input__eye_opened" : ""}`}
           onClick={togglePasswordVisibility}
         ></button>
-      ) : type === "calendar" ? null : (
+      ) : type === "date" ? null : (
         <button
           type="button"
           className={`input__clear-btn ${

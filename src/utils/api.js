@@ -76,7 +76,7 @@ class API {
 
   // Events
   createEvent(token, eventData) {
-    return this._request("/users/me", {
+    return this._request("/events", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

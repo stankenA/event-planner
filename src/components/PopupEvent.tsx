@@ -17,7 +17,7 @@ import {
 import Button from "./ui/Button";
 import { api } from "../utils/api";
 import { setIsNotificationSuccessful } from "../redux/notification/slice";
-import { changeFlag } from "../redux/flag/slice";
+import { triggerFlag } from "../redux/flag/slice";
 
 const PopupEvent: FC = () => {
   const dispatch = useDispatch();
@@ -61,7 +61,7 @@ const PopupEvent: FC = () => {
       dispatch(closeAllPopups());
       dispatch(setIsNotificationSuccessful(true));
       dispatch(setIsNotificationPopupOpened(true));
-      dispatch(changeFlag());
+      dispatch(triggerFlag());
     } catch (error) {
       dispatch(closeAllPopups());
       dispatch(setIsNotificationSuccessful(false));
@@ -101,7 +101,7 @@ const PopupEvent: FC = () => {
                       key={person.id}
                       name={person.username}
                       img={participantImg}
-                      isOrganizer={event.createdBy?.id === person.id}
+                      isOrganizer={event.owner?.id === person.id}
                     />
                   ))
                   .slice(0, 5)
@@ -110,7 +110,7 @@ const PopupEvent: FC = () => {
                     key={person.id}
                     name={person.username}
                     img={participantImg}
-                    isOrganizer={event.createdBy?.id === person.id}
+                    isOrganizer={event.owner?.id === person.id}
                   />
                 ))}
           </ul>

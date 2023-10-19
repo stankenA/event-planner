@@ -13,7 +13,11 @@ export function useFormWithValidation(inputValues: TValues) {
   const [errors, setErrors] = useState<TErrors>({});
   const [isValid, setIsValid] = useState<boolean>(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const name = event.target.name;
     const value = event.target.value;
     setValues({ ...values, [name]: value });

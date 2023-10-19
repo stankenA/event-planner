@@ -5,6 +5,7 @@ type TTextarea = {
   label: string;
   required: boolean;
   noticeTxt: string;
+  maxLength: number;
   handleChange: (evt: ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
@@ -13,6 +14,7 @@ const Textarea: FC<TTextarea> = ({
   label,
   required,
   noticeTxt,
+  maxLength,
   handleChange,
 }) => {
   const [textareaValue, setTextareaValue] = useState("");
@@ -34,7 +36,7 @@ const Textarea: FC<TTextarea> = ({
     handleChange(evt);
   }
   return (
-    <div className="textarea">
+    <div className={`textarea ${noticeTxt ? "textarea_notice" : ""}`}>
       <label
         htmlFor={name}
         className={`textarea__label ${
@@ -52,6 +54,7 @@ const Textarea: FC<TTextarea> = ({
         className="textarea__element"
         onFocus={focusLabel}
         onBlur={unfocusLabel}
+        maxLength={maxLength}
       ></textarea>
       <span className="textarea__notice">{noticeTxt}</span>
     </div>

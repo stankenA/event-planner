@@ -10,6 +10,7 @@ const EventBadge: FC<TEventBadge> = ({ date, event, isInactive }) => {
   const user = useSelector((state: RootState) => state.user);
 
   function handleEventClick() {
+    console.log(event);
     dispatch(setEvent(event));
     dispatch(setIsEventPopupOpened(true));
   }
@@ -18,7 +19,7 @@ const EventBadge: FC<TEventBadge> = ({ date, event, isInactive }) => {
     (person) => person.id === user.id
   );
 
-  const isOrganizer = event.createdBy?.id === user.id;
+  const isOrganizer = event.owner?.id === user.id;
 
   return (
     <button
