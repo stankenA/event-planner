@@ -26,7 +26,7 @@ const NotificationSuccess: FC = () => {
 
   return (
     <>
-      <h3 className="notification__title">Поздравляем!</h3>
+      <h2 className="notification__title">Поздравляем!</h2>
       <div className="notification__container">
         <p className="notification__txt">Вы теперь участник события:</p>
         <p className="notification__txt notification__txt_red">{event.title}</p>

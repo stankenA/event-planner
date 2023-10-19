@@ -138,7 +138,7 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({
 
   return (
     <form className="popup__form popup__form_registration">
-      <h3 className="popup__title">Регистрация</h3>
+      <h2 className="popup__title">Регистрация</h2>
       <div className="popup__password-info-container">
         <img
           src={infoIcon}

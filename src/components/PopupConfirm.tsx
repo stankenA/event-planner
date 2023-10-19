@@ -34,9 +34,9 @@ const PopupConfirm = () => {
   // TODO: пофиксить тему, когда при закрытии этого попапа на крестик или бг закрывается и попап с ивентами
   return (
     <Popup isOpened={isConfirmPopupOpened} isSmall={true}>
-      <h3 className="popup__confirm-title">
+      <h2 className="popup__confirm-title">
         Вы действительно хотите отменить участие?
-      </h3>
+      </h2>
       <div className="popup__confirm-btns">
         <Button type="button" handleClick={handleClosePopup}>
           Нет

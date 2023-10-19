@@ -112,7 +112,7 @@ const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm, setEmail }) => {
 
   return (
     <form className="popup__form">
-      <h3 className="popup__title">Вход</h3>
+      <h2 className="popup__title">Вход</h2>
       {/* Проверки ниже нужны из-за особенности Реакта, ибо если оставить тернарный оператор, то Реакт вместо полноценного цикла маунтинга/анмаунтинга будет думать, что это один и тот же элемент и произойдёт процесс Reconciliation, из-за чего их стейты меняться не будут */}
       {!isMailExisting ? (
         <Input

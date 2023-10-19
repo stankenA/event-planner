@@ -12,7 +12,7 @@ const NotificationFailed: FC = () => {
 
   return (
     <>
-      <h3 className="notification__title">Что-то пошло не так</h3>
+      <h2 className="notification__title">Что-то пошло не так</h2>
       <div className="notification__container">
         <p className="notification__txt notification__txt_red">
           Попробуйте позже

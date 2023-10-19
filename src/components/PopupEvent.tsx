@@ -73,7 +73,7 @@ const PopupEvent: FC = () => {
 
   return (
     <Popup isOpened={isEventPopupOpened} isLarge={true}>
-      <h3 className="popup__title popup__title_event">{event.title}</h3>
+      <h2 className="popup__title popup__title_event">{event.title}</h2>
       <div className="event">
         <div className="event__box">
           <div className="event__date">
