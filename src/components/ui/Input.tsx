@@ -6,7 +6,8 @@ type TInput = {
   label: string;
   placeholder: string;
   noticeTxt: string;
-  required: boolean;
+  isFocused?: boolean;
+  required?: boolean;
   minLength?: number;
   maxLength?: number;
   isValid?: boolean;
@@ -20,6 +21,7 @@ const Input: FC<TInput> = ({
   name,
   label,
   placeholder,
+  isFocused,
   required,
   noticeTxt,
   minLength,
@@ -30,7 +32,9 @@ const Input: FC<TInput> = ({
   handleClear,
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [isLabelFocused, setIsLabelFocused] = useState(false);
+  const [isLabelFocused, setIsLabelFocused] = useState(
+    isFocused ? isFocused : false
+  );
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [inputType, setInputType] = useState(type);
@@ -56,6 +60,10 @@ const Input: FC<TInput> = ({
   }
 
   function unfocusLabel() {
+    if (isFocused) {
+      return;
+    }
+
     if (!inputValue) {
       setIsLabelFocused(false);
       setIsPlaceholderShown(false);

@@ -13,6 +13,7 @@ import { setUser } from "./redux/user/slice";
 import PopupEvent from "./components/PopupEvent";
 import PopupNotification from "./components/PopupNotification";
 import PopupConfirm from "./components/PopupConfirm";
+import PopupCreate from "./components/PopupCreate";
 
 const App: FC = () => {
   moment.updateLocale("ru", {
@@ -136,6 +137,7 @@ const App: FC = () => {
       <PopupEvent />
       <PopupNotification />
       <PopupConfirm />
+      <PopupCreate />
     </div>
   );
 };

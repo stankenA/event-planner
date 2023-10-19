@@ -5,6 +5,7 @@ type TPopupsSlice = {
   isEventPopupOpened: boolean;
   isNotificationPopupOpened: boolean;
   isConfirmPopupOpened: boolean;
+  isCreatePopupOpened: boolean;
 };
 
 export const initialState: TPopupsSlice = {
@@ -12,6 +13,7 @@ export const initialState: TPopupsSlice = {
   isEventPopupOpened: false,
   isNotificationPopupOpened: false,
   isConfirmPopupOpened: false,
+  isCreatePopupOpened: false,
 };
 
 export const popupsSlice = createSlice({
@@ -30,11 +32,15 @@ export const popupsSlice = createSlice({
     setIsConfirmPopupOpened(state, action: PayloadAction<boolean>) {
       state.isConfirmPopupOpened = action.payload;
     },
+    setIsCreatePopupOpened(state, action: PayloadAction<boolean>) {
+      state.isCreatePopupOpened = action.payload;
+    },
     closeAllPopups(state) {
       state.isAuthPopupOpened = false;
       state.isEventPopupOpened = false;
       state.isNotificationPopupOpened = false;
       state.isConfirmPopupOpened = false;
+      state.isCreatePopupOpened = false;
     },
   },
 });
@@ -44,6 +50,7 @@ export const {
   setIsEventPopupOpened,
   setIsNotificationPopupOpened,
   setIsConfirmPopupOpened,
+  setIsCreatePopupOpened,
   closeAllPopups,
 } = popupsSlice.actions;
 

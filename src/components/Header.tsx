@@ -5,7 +5,10 @@ import { months } from "../utils/contstants";
 
 import userAvatar from "../images/user-avatar-default.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsAuthPopupOpened } from "../redux/popups/slice";
+import {
+  setIsAuthPopupOpened,
+  setIsCreatePopupOpened,
+} from "../redux/popups/slice";
 import {
   decreaseMonthOverlap,
   increaseMonthOverlap,
@@ -36,6 +39,10 @@ const Header: FC<THeaderProps> = () => {
   function handleLogOut() {
     dispatch(logoutUser());
     localStorage.removeItem("jwt");
+  }
+
+  function handleCreateEvent() {
+    dispatch(setIsCreatePopupOpened(true));
   }
 
   return (
@@ -74,7 +81,7 @@ const Header: FC<THeaderProps> = () => {
           </div>
           {user.isAuth ? (
             <div className="header__user-info">
-              <Button type="button" handleClick={() => console.log("boop")}>
+              <Button type="button" handleClick={handleCreateEvent}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="22"

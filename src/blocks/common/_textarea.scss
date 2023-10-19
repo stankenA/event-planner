@@ -1,0 +1,148 @@
+.textarea {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 12px;
+  background: var(--basic-base, #fff);
+  box-sizing: border-box;
+
+  &_notice {
+    .textarea__element {
+      border-color: #f51b1b !important;
+    }
+
+    .textarea__notice {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .textarea__clear-btn {
+      background-image: url(../../images/cross-icon-red.svg);
+    }
+  }
+
+  &_valid {
+    .textarea__element {
+      border-color: #23ae00 !important;
+    }
+  }
+
+  &__element {
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    box-sizing: border-box;
+    border: 1px solid var(--Gray, #b3b3bc);
+    padding: 27px 17px 11px;
+    color: var(--main-colors-black, #0d0c0c);
+    font-family: TT Commons;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 120%; /* 21.6px */
+    letter-spacing: -0.36px;
+    caret-color: #23ae00;
+    @include transition;
+    resize: none;
+
+    &:focus-visible {
+      outline: none;
+      border-color: #0d0c0c;
+    }
+
+    &::placeholder {
+      color: var(--Gray, #b3b3bc);
+      font-family: TT Commons;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 110%; /* 22px */
+      letter-spacing: -0.4px;
+    }
+  }
+
+  &__label {
+    position: absolute;
+    top: 18px;
+    left: 16px;
+    color: var(--Gray, #b3b3bc);
+    font-family: TT Commons;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 110%; /* 22px */
+    letter-spacing: -0.4px;
+    pointer-events: none;
+    @include transition;
+
+    &_focused {
+      top: 12px;
+      left: 16px;
+      transform: translateY(0);
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: -0.28px;
+    }
+  }
+
+  &__star {
+    color: var(--main-colors-accent, #f51b1b);
+  }
+
+  &__notice {
+    position: absolute;
+    top: 105%;
+    left: 0;
+    color: #f51b1b;
+    font-family: TT Commons;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+    letter-spacing: -0.28px;
+    opacity: 0;
+    visibility: hidden;
+    @include transition;
+  }
+
+  &__eye {
+    @include reset-btn;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../../images/eye-closed.svg);
+    cursor: pointer;
+
+    &_opened {
+      background-image: url(../../images/eye-opened.svg);
+    }
+  }
+
+  &__clear-btn {
+    @include reset-btn;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    transform-origin: 50% 0;
+    background: url(../../images/cross-icon.svg) no-repeat center / 14px 14px;
+    cursor: pointer;
+    @include transition(0.1s);
+    opacity: 0;
+    visibility: hidden;
+
+    &:hover {
+      // opacity: 0.6;
+    }
+
+    &_visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
