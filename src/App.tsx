@@ -11,6 +11,7 @@ import { RootState } from "./redux/store";
 import { setMonth, setYear } from "./redux/dates/slice";
 import { setUser } from "./redux/user/slice";
 import PopupEvent from "./components/PopupEvent";
+import PopupNotification from "./components/PopupNotification";
 
 const App: FC = () => {
   moment.updateLocale("ru", {
@@ -104,6 +105,7 @@ const App: FC = () => {
       </section>
       <PopupAuth />
       <PopupEvent />
+      <PopupNotification />
     </div>
   );
 };

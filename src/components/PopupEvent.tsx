@@ -8,7 +8,11 @@ import { weekdays } from "../utils/contstants";
 
 import participantImg from "../images/user-avatar-default.png";
 import Gallery from "./Gallery";
-import { closeAllPopups, setIsAuthPopupOpened } from "../redux/popups/slice";
+import {
+  closeAllPopups,
+  setIsAuthPopupOpened,
+  setIsNotificationPopupOpened,
+} from "../redux/popups/slice";
 import Button from "./ui/Button";
 import { api } from "../utils/api";
 
@@ -39,6 +43,7 @@ const PopupEvent: FC = () => {
       );
       console.log(response);
       dispatch(closeAllPopups());
+      dispatch(setIsNotificationPopupOpened(true));
     } catch (error) {
       console.log(error);
     }
