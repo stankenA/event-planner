@@ -17,6 +17,9 @@ import {
 import Button from "./ui/Button";
 import { api } from "../utils/api";
 import { setIsNotificationSuccessful } from "../redux/notification/slice";
+import { setEvent } from "../redux/event/slice";
+import { setUser } from "../redux/user/slice";
+import { changeFlag } from "../redux/flag/slice";
 
 const PopupEvent: FC = () => {
   const dispatch = useDispatch();
@@ -53,10 +56,10 @@ const PopupEvent: FC = () => {
         localStorage.getItem("jwt"),
         event.id
       );
-      console.log(response);
       dispatch(closeAllPopups());
       dispatch(setIsNotificationSuccessful(true));
       dispatch(setIsNotificationPopupOpened(true));
+      dispatch(changeFlag());
     } catch (error) {
       dispatch(closeAllPopups());
       dispatch(setIsNotificationSuccessful(false));

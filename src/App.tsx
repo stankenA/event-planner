@@ -28,6 +28,7 @@ const App: FC = () => {
   const [calendarDates, setCalendarDates] = useState([...Array(42).fill("")]);
   const [events, setEvents] = useState<TEvent[]>([]);
   const user = useSelector((state: RootState) => state.user);
+  const flag = useSelector((state: RootState) => state.flag.flag);
 
   const monthOverlap = useSelector(
     (state: RootState) => state.dates.monthOverlap
@@ -96,7 +97,7 @@ const App: FC = () => {
     } else {
       getEventsForPublic();
     }
-  }, [calendarDates, user.isAuth]);
+  }, [calendarDates, user.isAuth, flag]);
 
   // Проверяем, сохранён ли токен в сторадже
   useEffect(() => {

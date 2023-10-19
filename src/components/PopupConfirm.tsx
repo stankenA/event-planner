@@ -5,6 +5,7 @@ import { RootState } from "../redux/store";
 import Button from "./ui/Button";
 import { closeAllPopups, setIsConfirmPopupOpened } from "../redux/popups/slice";
 import { api } from "../utils/api";
+import { changeFlag } from "../redux/flag/slice";
 
 const PopupConfirm = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const PopupConfirm = () => {
         localStorage.getItem("jwt"),
         eventId
       );
-      console.log(response);
+      dispatch(changeFlag());
       dispatch(closeAllPopups());
     } catch (error) {
       console.log(error);
