@@ -10,7 +10,7 @@ type TSuccessProps = {
   handleBtnClick: () => void;
 };
 
-const PopupNotificationSuccess: FC<TSuccessProps> = ({ handleBtnClick }) => {
+const NotificationSuccess: FC<TSuccessProps> = ({ handleBtnClick }) => {
   const event = useSelector((state: RootState) => state.event);
 
   // TODO: есть ли смысл создавать отдельное состояние чтобы тащить уже высчитанную
@@ -24,34 +24,32 @@ const PopupNotificationSuccess: FC<TSuccessProps> = ({ handleBtnClick }) => {
 
   return (
     <>
-      <h3 className="popup__notification-title">Поздравляем!</h3>
-      <div className="popup__notification-container">
-        <p className="popup__notification-txt">Вы теперь участник события:</p>
-        <p className="popup__notification-txt popup__notification-txt_red">
-          {event.title}
-        </p>
+      <h3 className="notification__title">Поздравляем!</h3>
+      <div className="notification__container">
+        <p className="notification__txt">Вы теперь участник события:</p>
+        <p className="notification__txt notification__txt_red">{event.title}</p>
       </div>
-      <div className="popup__notification-info">
-        <div className="popup__notification-info-top">
-          <p className="popup__notification-txt">{dayOfWeek}</p>
-          <span className="popup__separator"></span>
-          <p className="popup__notification-txt">
+      <div className="notification__info">
+        <div className="notification__info-top">
+          <p className="notification__txt">{dayOfWeek}</p>
+          <span className="notification__separator"></span>
+          <p className="notification__txt">
             {day} {month}
           </p>
-          <span className="popup__separator"></span>
-          <p className="popup__notification-txt">
+          <span className="notification__separator"></span>
+          <p className="notification__txt">
             {hour < 10 ? "0" + hour : hour}:
             {minutes < 10 ? "0" + minutes : minutes}
           </p>
         </div>
-        <p className="popup__notification-address">{event.location}</p>
+        <p className="notification__address">{event.location}</p>
       </div>
       <Button type="button" handleClick={handleBtnClick}>
         Отлично
       </Button>
-      <img src={handImg} alt="Рука" className="popup__img" />
+      <img src={handImg} alt="Рука" className="notification__img" />
     </>
   );
 };
 
-export default PopupNotificationSuccess;
+export default NotificationSuccess;

@@ -3,7 +3,7 @@ import Popup from "./Popup";
 import { useDispatch, useSelector } from "react-redux";
 import { closeAllPopups } from "../redux/popups/slice";
 import { RootState } from "../redux/store";
-import PopupNotificationSuccess from "./PopupNotificationSuccess";
+import NotificationSuccess from "./NotificationSuccess";
 
 const PopupNotification: FC = () => {
   const dispatch = useDispatch();
@@ -20,9 +20,11 @@ const PopupNotification: FC = () => {
 
   return (
     <Popup isOpened={isNotificationPopupOpened} isMedium={true}>
-      {isSuccessful ? (
-        <PopupNotificationSuccess handleBtnClick={handleBtnClick} />
-      ) : null}
+      <div className="notification">
+        {isSuccessful ? (
+          <NotificationSuccess handleBtnClick={handleBtnClick} />
+        ) : null}
+      </div>
     </Popup>
   );
 };
