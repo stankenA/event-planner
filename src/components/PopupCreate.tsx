@@ -21,7 +21,6 @@ import {
   setNotificationMessage,
 } from "../redux/notification/slice";
 import DragField from "./DragField";
-import { IndexInfo } from "typescript";
 
 const PopupCreate = () => {
   const dispatch = useDispatch();
@@ -45,7 +44,9 @@ const PopupCreate = () => {
     location: "",
     time: "",
   });
+  const [fileList, setFileList] = useState<FileList | null>(null);
   const [photos, setPhotos] = useState<string[]>([]);
+  console.log(fileList);
 
   function checkFormValidity() {
     let errorsObj = {
@@ -150,6 +151,13 @@ const PopupCreate = () => {
     dispatch(setIsCreatePopupOpened(false));
   }
 
+  // function fn() {
+  //   setPhotos([
+  //     ...photos,
+  //     URL.createObjectURL(evt.dataTransfer.files[0]),
+  //   ]);
+  // }
+
   function handlePhotoDelete(index: number) {
     const arr = photos.filter((_, i) => i !== index);
     setPhotos(arr);
@@ -232,7 +240,12 @@ const PopupCreate = () => {
             noticeTxt=""
           />
           <Participant img={userImg} name={user.username} isOrganizer={true} />
-          <DragField initialPhotos={photos} setPhotos={setPhotos} />
+          <DragField
+            initialPhotos={photos}
+            setPhotos={setPhotos}
+            // photoFiles={fileList}
+            // setPhotoFiles={setFileList}
+          />
           <ul className="photos">
             {photos.map((photo, i) => (
               <li className="photos__item" key={photo}>

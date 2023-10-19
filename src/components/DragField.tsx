@@ -3,9 +3,16 @@ import React, { FC } from "react";
 type TDragFieldProps = {
   initialPhotos: string[];
   setPhotos: React.Dispatch<React.SetStateAction<string[]>>;
+  photoFiles?: FileList;
+  setPhotoFiles?: React.Dispatch<React.SetStateAction<FileList | undefined>>;
 };
 
-const DragField: FC<TDragFieldProps> = ({ initialPhotos, setPhotos }) => {
+const DragField: FC<TDragFieldProps> = ({
+  initialPhotos,
+  setPhotos,
+  // photoFiles,
+  // setPhotoFiles,
+}) => {
   const [dragActive, setDragActive] = React.useState(false);
 
   const handleDrag = function (evt: React.DragEvent<HTMLDivElement>) {
@@ -25,6 +32,8 @@ const DragField: FC<TDragFieldProps> = ({ initialPhotos, setPhotos }) => {
         ...initialPhotos,
         URL.createObjectURL(evt.dataTransfer.files[0]),
       ]);
+      // const files = evt.dataTransfer.files;
+      // setPhotoFiles(evt.dataTransfer.files);
     }
   };
 

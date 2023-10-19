@@ -169,11 +169,15 @@ class API {
     }).then((data) => data);
   }
 
-  uploadFiles(token, file) {
+  uploadFiles(token, files) {
     return this._request(`/upload/files`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": " multipart/form-data",
+      },
+      body: {
+        files: files,
       },
     }).then((data) => data);
   }
