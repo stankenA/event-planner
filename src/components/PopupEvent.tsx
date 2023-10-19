@@ -1,10 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Popup from "./Popup";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Participant from "./Participant";
 import moment from "moment";
-import { weekdays } from "../utils/contstants";
+import { eventMonths, weekdays } from "../utils/contstants";
 
 import participantImg from "../images/user-avatar-default.png";
 import Gallery from "./Gallery";
@@ -23,10 +23,12 @@ const PopupEvent: FC = () => {
   const isEventPopupOpened = useSelector(
     (state: RootState) => state.popups.isEventPopupOpened
   );
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const date = moment(event.dateStart);
   const day = date.date();
-  const dayOfWeek = date.weekday();
+  const dayOfWeek = weekdays[date.weekday()];
+  const month = eventMonths[date.month()];
   const hour = date.hour();
   const minutes = date.minutes();
 
@@ -36,6 +38,7 @@ const PopupEvent: FC = () => {
   }
 
   async function handleJoinEvent() {
+    setIsButtonDisabled(true);
     try {
       const response = await api.joinEvent(
         localStorage.getItem("jwt"),
@@ -46,6 +49,8 @@ const PopupEvent: FC = () => {
       dispatch(setIsNotificationPopupOpened(true));
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsButtonDisabled(false);
     }
   }
 
@@ -55,8 +60,10 @@ const PopupEvent: FC = () => {
       <div className="event">
         <div className="event__box">
           <div className="event__date">
-            <p className="event__txt-bold">{weekdays[dayOfWeek]}</p>
-            <p className="event__txt-bold">{day} октября</p>
+            <p className="event__txt-bold">{dayOfWeek}</p>
+            <p className="event__txt-bold">
+              {day} {month}
+            </p>
             <p className="event__txt-bold">
               {hour < 10 ? "0" + hour : hour}:
               {minutes < 10 ? "0" + minutes : minutes}
@@ -94,7 +101,11 @@ const PopupEvent: FC = () => {
           , чтобы присоединиться к событию
         </p>
       ) : (
-        <Button type="button" handleClick={handleJoinEvent}>
+        <Button
+          type="button"
+          handleClick={handleJoinEvent}
+          isDisabled={isButtonDisabled}
+        >
           Присоединиться к событию
         </Button>
       )}
