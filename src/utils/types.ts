@@ -34,7 +34,7 @@ export type TEvent = {
   updatedAt: string;
   photos?: string[] | null;
   participants?: TUser[];
-  createdBy?: string | null;
+  createdBy?: TUser;
   updatedBy?: string | null;
 };
 

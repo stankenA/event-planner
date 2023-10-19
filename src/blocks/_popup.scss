@@ -20,7 +20,7 @@
 
   &__wrapper {
     box-sizing: border-box;
-    padding: 80px 64px;
+    padding: 70px 64px;
     border-radius: 64px;
     background: var(--basic-base, #fff);
     position: relative;
@@ -37,6 +37,7 @@
       width: 1075px;
       padding: 80px 0;
       justify-content: flex-start;
+      gap: 30px;
     }
 
     &_medium {
@@ -79,6 +80,12 @@
     letter-spacing: -0.72px;
     text-align: center;
     margin: 0;
+
+    &_event {
+      box-sizing: border-box;
+      padding-left: 64px;
+      padding-right: 64px;
+    }
   }
 
   &__form {

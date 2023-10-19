@@ -73,7 +73,7 @@ const PopupEvent: FC = () => {
 
   return (
     <Popup isOpened={isEventPopupOpened} isLarge={true}>
-      <h3 className="popup__title">{event.title}</h3>
+      <h3 className="popup__title popup__title_event">{event.title}</h3>
       <div className="event">
         <div className="event__box">
           <div className="event__date">
@@ -96,21 +96,21 @@ const PopupEvent: FC = () => {
           <ul className="participants__list">
             {isManyParticipants
               ? event.participants
-                  ?.map((user) => (
+                  ?.map((person) => (
                     <Participant
-                      key={user.id}
-                      name={user.username}
+                      key={person.id}
+                      name={person.username}
                       img={participantImg}
-                      isOrganizer={false}
+                      isOrganizer={event.createdBy?.id === person.id}
                     />
                   ))
                   .slice(0, 5)
-              : event.participants?.map((user) => (
+              : event.participants?.map((person) => (
                   <Participant
-                    key={user.id}
-                    name={user.username}
+                    key={person.id}
+                    name={person.username}
                     img={participantImg}
-                    isOrganizer={false}
+                    isOrganizer={event.createdBy?.id === person.id}
                   />
                 ))}
           </ul>
