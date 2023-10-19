@@ -12,11 +12,15 @@ import {
   closeAllPopups,
   setIsAuthPopupOpened,
   setIsConfirmPopupOpened,
+  setIsEventPopupOpened,
   setIsNotificationPopupOpened,
 } from "../redux/popups/slice";
 import Button from "./ui/Button";
 import { api } from "../utils/api";
-import { setIsNotificationSuccessful } from "../redux/notification/slice";
+import {
+  setIsNotificationSuccessful,
+  setNotificationMessage,
+} from "../redux/notification/slice";
 import { triggerFlag } from "../redux/flag/slice";
 
 const PopupEvent: FC = () => {
@@ -37,6 +41,9 @@ const PopupEvent: FC = () => {
   const month = eventMonths[date.month()];
   const hour = date.hour();
   const minutes = date.minutes();
+  const time = `${hour < 10 ? "0" + hour : hour}:${
+    minutes < 10 ? "0" + minutes : minutes
+  }`;
 
   const isManyParticipants = event.participants
     ? event.participants.length > 5
@@ -58,6 +65,19 @@ const PopupEvent: FC = () => {
         localStorage.getItem("jwt"),
         event.id
       );
+      dispatch(
+        setNotificationMessage({
+          heading: "Поздравляем!",
+          case: "Вы теперь участник события:",
+          title: event.title,
+          dayOfWeek: dayOfWeek,
+          day: day,
+          month: month,
+          time: time,
+          location: event.location,
+          isUnicorn: false,
+        })
+      );
       dispatch(closeAllPopups());
       dispatch(setIsNotificationSuccessful(true));
       dispatch(setIsNotificationPopupOpened(true));
@@ -71,8 +91,16 @@ const PopupEvent: FC = () => {
     }
   }
 
+  function handleClosePopup() {
+    dispatch(setIsEventPopupOpened(false));
+  }
+
   return (
-    <Popup isOpened={isEventPopupOpened} isLarge={true}>
+    <Popup
+      isOpened={isEventPopupOpened}
+      isLarge={true}
+      handleClose={handleClosePopup}
+    >
       <h2 className="popup__title popup__title_event">{event.title}</h2>
       <div className="event">
         <div className="event__box">
@@ -81,10 +109,7 @@ const PopupEvent: FC = () => {
             <p className="event__txt-bold">
               {day} {month}
             </p>
-            <p className="event__txt-bold">
-              {hour < 10 ? "0" + hour : hour}:
-              {minutes < 10 ? "0" + minutes : minutes}
-            </p>
+            <p className="event__txt-bold">{time}</p>
           </div>
           <p className="event__address">{event.location}</p>
         </div>

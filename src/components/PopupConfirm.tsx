@@ -14,10 +14,6 @@ const PopupConfirm = () => {
   );
   const eventId = useSelector((state: RootState) => state.event.id);
 
-  function handleClosePopup() {
-    dispatch(setIsConfirmPopupOpened(false));
-  }
-
   async function handleLeaveEvent() {
     try {
       const response = await api.leaveEvent(
@@ -31,9 +27,16 @@ const PopupConfirm = () => {
     }
   }
 
-  // TODO: пофиксить тему, когда при закрытии этого попапа на крестик или бг закрывается и попап с ивентами
+  function handleClosePopup() {
+    dispatch(setIsConfirmPopupOpened(false));
+  }
+
   return (
-    <Popup isOpened={isConfirmPopupOpened} isSmall={true}>
+    <Popup
+      isOpened={isConfirmPopupOpened}
+      isSmall={true}
+      handleClose={handleClosePopup}
+    >
       <h2 className="popup__confirm-title">
         Вы действительно хотите отменить участие?
       </h2>

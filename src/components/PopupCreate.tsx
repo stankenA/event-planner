@@ -10,12 +10,16 @@ import Textarea from "./ui/Textarea";
 import { useFormWithValidation } from "../hooks/useFormWithValidation";
 import { api } from "../utils/api";
 import moment from "moment";
-import { timeRegExp } from "../utils/contstants";
+import { eventMonths, timeRegExp, weekdays } from "../utils/contstants";
 import {
   setIsCreatePopupOpened,
   setIsNotificationPopupOpened,
 } from "../redux/popups/slice";
 import { triggerFlag } from "../redux/flag/slice";
+import {
+  setIsNotificationSuccessful,
+  setNotificationMessage,
+} from "../redux/notification/slice";
 
 const PopupCreate = () => {
   const dispatch = useDispatch();
@@ -94,13 +98,15 @@ const PopupCreate = () => {
   }
 
   async function createNewEvent() {
-    const dateStart = moment(`${values.dateStart} ${values.time}`).toJSON();
-    const dateEnd = moment(`${values.dateEnd}`).toJSON();
+    const dateStart = moment(`${values.dateStart} ${values.time}`);
+    const dateEnd = moment(`${values.dateEnd}`);
 
     const newEvent = {
-      ...values,
-      dateStart: dateStart,
-      dateEnd: dateEnd,
+      title: values.title,
+      description: values.description,
+      location: values.location,
+      dateStart: dateStart.toJSON(),
+      dateEnd: dateEnd.toJSON(),
       participants: [user],
     };
 
@@ -111,7 +117,22 @@ const PopupCreate = () => {
       console.log(response);
       dispatch(setIsCreatePopupOpened(false));
       dispatch(triggerFlag());
+      dispatch(
+        setNotificationMessage({
+          heading: "Ура!",
+          case: "Вы добавили новое событие:",
+          title: newEvent.title,
+          dayOfWeek: weekdays[dateStart.weekday()],
+          day: dateStart.date(),
+          month: eventMonths[dateStart.month()],
+          time: values.time,
+          location: newEvent.location,
+          isUnicorn: true,
+        })
+      );
+      dispatch(setIsNotificationPopupOpened(true));
     } catch (error) {
+      dispatch(setIsNotificationSuccessful(false));
       dispatch(setIsNotificationPopupOpened(true));
     }
   }
@@ -122,8 +143,16 @@ const PopupCreate = () => {
     }
   }
 
+  function handleClosePopup() {
+    dispatch(setIsCreatePopupOpened(false));
+  }
+
   return (
-    <Popup isOpened={isCreatePopupOpened} isLarge={true}>
+    <Popup
+      isOpened={isCreatePopupOpened}
+      isLarge={true}
+      handleClose={handleClosePopup}
+    >
       <h2 className="popup__title">Создание события</h2>
       <form className="create">
         <div className="create__grid">

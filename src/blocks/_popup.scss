@@ -66,6 +66,7 @@
     background: url(../images/cross-icon.svg) no-repeat center / 24px 24px;
     cursor: pointer;
     @include transition;
+    z-index: 2;
 
     &:hover {
       rotate: 180deg;

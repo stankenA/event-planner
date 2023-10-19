@@ -1,17 +1,11 @@
-import React, {
-  FC,
-  MouseEventHandler,
-  PropsWithChildren,
-  useEffect,
-} from "react";
-import { useDispatch } from "react-redux";
-import { closeAllPopups } from "../redux/popups/slice";
+import React, { FC, PropsWithChildren, useEffect } from "react";
 
 type TPopupProps = PropsWithChildren & {
   isOpened: boolean;
   isLarge?: boolean;
   isMedium?: boolean;
   isSmall?: boolean;
+  handleClose: () => void;
 };
 
 const Popup: FC<TPopupProps> = ({
@@ -20,23 +14,18 @@ const Popup: FC<TPopupProps> = ({
   isLarge,
   isMedium,
   isSmall,
+  handleClose,
 }) => {
-  const dispatch = useDispatch();
-
-  function closeModal() {
-    dispatch(closeAllPopups());
-  }
-
   function closeOnBg(evt: any) {
     if ((evt.target as Element).classList.contains("popup_opened")) {
-      closeModal();
+      handleClose();
     }
   }
 
   useEffect(() => {
     function closeOnEsc(evt: KeyboardEvent) {
       if (evt.key === "Escape") {
-        closeModal();
+        handleClose();
       }
     }
 
@@ -61,7 +50,7 @@ const Popup: FC<TPopupProps> = ({
         <button
           type="button"
           className="popup__close"
-          onClick={closeModal}
+          onClick={handleClose}
         ></button>
         {children}
       </div>
