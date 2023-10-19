@@ -37,6 +37,14 @@ const DragField: FC<TDragFieldProps> = ({
     }
   };
 
+  const handleChange = function (evt: React.ChangeEvent<HTMLInputElement>) {
+    evt.preventDefault();
+    console.log(evt.target.files);
+    if (evt.target.files && evt.target.files[0]) {
+      setPhotos([...initialPhotos, URL.createObjectURL(evt.target.files[0])]);
+    }
+  };
+
   const enableDropping = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
@@ -49,7 +57,13 @@ const DragField: FC<TDragFieldProps> = ({
       onDrop={handleDrop}
       onDragOver={enableDropping}
     >
-      <input type="file" name="file" className="drag__input" id="file" />
+      <input
+        type="file"
+        name="file"
+        className="drag__input"
+        id="file"
+        onChange={handleChange}
+      />
       <label
         htmlFor="file"
         className={`drag__label ${dragActive ? "drag__label_active" : ""}`}
