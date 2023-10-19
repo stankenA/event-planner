@@ -5,6 +5,10 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 32px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 64px;
+    padding-right: 64px;
   }
 
   &__subtitle {
@@ -20,10 +24,6 @@
   &__navigation {
     display: flex;
     gap: 8px;
-  }
-
-  &__swiper {
-    height: 160px;
   }
 
   &__slide {

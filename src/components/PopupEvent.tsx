@@ -6,8 +6,7 @@ import Participant from "./Participant";
 import moment from "moment";
 import { weekdays } from "../utils/contstants";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import "swiper/css";
+import { Navigation, Pagination } from "swiper/modules";
 
 import participantImg from "../images/user-avatar-default.png";
 import galleryImg from "../images/gallery-img.png";
@@ -88,8 +87,12 @@ const PopupEvent: FC = () => {
           spaceBetween={16}
           grabCursor={true}
           className="gallery__swiper"
-          modules={[Navigation]}
+          modules={[Navigation, Pagination]}
+          pagination={{ clickable: true }}
         >
+          <SwiperSlide className="gallery__slide">
+            <img src={galleryImg} alt="Фото события" className="gallery__img" />
+          </SwiperSlide>
           <SwiperSlide className="gallery__slide">
             <img src={galleryImg} alt="Фото события" className="gallery__img" />
           </SwiperSlide>

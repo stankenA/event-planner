@@ -1,5 +1,8 @@
 .participants {
   width: 100%;
+  box-sizing: border-box;
+  padding-left: 64px;
+  padding-right: 64px;
   margin-bottom: 16px;
 
   &__subtitle {

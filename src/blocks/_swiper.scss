@@ -1,0 +1,34 @@
+.swiper {
+  box-sizing: border-box;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.swiper-wrapper {
+  height: 160px;
+}
+
+.swiper-pagination {
+  margin-top: 32px;
+  position: static;
+}
+
+.swiper-pagination-bullet {
+  width: 32px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--system-colors-element, #efefef);
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+  margin-right: 12px;
+  @include transition;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--main-colors-accent, #f51b1b);
+}

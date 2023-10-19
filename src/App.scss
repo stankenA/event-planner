@@ -1,5 +1,7 @@
 @import "./vendor/normalize";
 @import "./vendor/fonts/fonts";
+@import "swiper/css";
+@import "swiper/css/pagination";
 
 @import "./blocks/common/mixins";
 @import "./blocks/common/vars";
@@ -15,3 +17,4 @@
 @import "./blocks/event";
 @import "./blocks/participants";
 @import "./blocks/gallery";
+@import "./blocks/swiper";

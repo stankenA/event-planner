@@ -3,6 +3,9 @@
   display: flex;
   gap: 32px;
   align-items: flex-start;
+  box-sizing: border-box;
+  padding-left: 64px;
+  padding-right: 64px;
 
   &__box {
     display: flex;
