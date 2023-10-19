@@ -3,15 +3,17 @@ import Button from "./ui/Button";
 import handImg from "../images/hand-img.png";
 import moment from "moment";
 import { eventMonths, weekdays } from "../utils/contstants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { closeAllPopups } from "../redux/popups/slice";
 
-type TSuccessProps = {
-  handleBtnClick: () => void;
-};
-
-const NotificationSuccess: FC<TSuccessProps> = ({ handleBtnClick }) => {
+const NotificationSuccess: FC = () => {
+  const dispatch = useDispatch();
   const event = useSelector((state: RootState) => state.event);
+
+  function handleBtnClick() {
+    dispatch(closeAllPopups());
+  }
 
   // TODO: есть ли смысл создавать отдельное состояние чтобы тащить уже высчитанную
   // в попапе ивента инфорацию ниже, или просто оставить дублирование
@@ -44,7 +46,11 @@ const NotificationSuccess: FC<TSuccessProps> = ({ handleBtnClick }) => {
         </div>
         <p className="notification__address">{event.location}</p>
       </div>
-      <Button type="button" handleClick={handleBtnClick}>
+      <Button
+        type="button"
+        handleClick={handleBtnClick}
+        className="notification__btn"
+      >
         Отлично
       </Button>
       <img src={handImg} alt="Рука" className="notification__img" />

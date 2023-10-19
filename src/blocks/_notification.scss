@@ -18,6 +18,8 @@
     line-height: 120%; /* 76.8px */
     letter-spacing: -2.56px;
     margin: 0;
+    max-width: 516px;
+    z-index: 2;
   }
 
   &__txt {
@@ -35,7 +37,6 @@
 
   &__info {
     width: 389px;
-    margin-bottom: auto;
   }
 
   &__info-top {
@@ -69,5 +70,15 @@
     top: 0;
     right: 34px;
     object-fit: cover;
+
+    &_pigeon {
+      top: 143px;
+      right: 0;
+      height: 327px;
+    }
+  }
+
+  &__btn {
+    margin-top: auto;
   }
 }

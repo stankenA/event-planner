@@ -50,6 +50,7 @@ const PopupEvent: FC = () => {
       dispatch(setIsNotificationSuccessful(true));
       dispatch(setIsNotificationPopupOpened(true));
     } catch (error) {
+      dispatch(closeAllPopups());
       dispatch(setIsNotificationSuccessful(false));
       dispatch(setIsNotificationPopupOpened(true));
     } finally {
