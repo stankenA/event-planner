@@ -9,6 +9,7 @@
   }
 
   &__top {
+    @include reset-list;
     width: var(--content-width);
     margin: 0 auto;
     display: grid;

@@ -119,15 +119,15 @@ const App: FC = () => {
     <div className="page">
       <Header />
       <section className="calendar">
-        <div className="calendar__top">
-          <p className="calendar__weekday">Пн</p>
-          <p className="calendar__weekday">Вт</p>
-          <p className="calendar__weekday">Ср</p>
-          <p className="calendar__weekday">Чт</p>
-          <p className="calendar__weekday">Пт</p>
-          <p className="calendar__weekday">Сб</p>
-          <p className="calendar__weekday">Вс</p>
-        </div>
+        <ul className="calendar__top">
+          <li className="calendar__weekday">Пн</li>
+          <li className="calendar__weekday">Вт</li>
+          <li className="calendar__weekday">Ср</li>
+          <li className="calendar__weekday">Чт</li>
+          <li className="calendar__weekday">Пт</li>
+          <li className="calendar__weekday">Сб</li>
+          <li className="calendar__weekday">Вс</li>
+        </ul>
         <div className="calendar__wrapper">
           <Calendar calendarDates={calendarDates} events={events} />
         </div>
