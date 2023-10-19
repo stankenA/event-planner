@@ -12,6 +12,7 @@ import { setMonth, setYear } from "./redux/dates/slice";
 import { setUser } from "./redux/user/slice";
 import PopupEvent from "./components/PopupEvent";
 import PopupNotification from "./components/PopupNotification";
+import PopupConfirm from "./components/PopupConfirm";
 
 const App: FC = () => {
   moment.updateLocale("ru", {
@@ -26,6 +27,7 @@ const App: FC = () => {
 
   const [calendarDates, setCalendarDates] = useState([...Array(42).fill("")]);
   const [events, setEvents] = useState<TEvent[]>([]);
+  const user = useSelector((state: RootState) => state.user);
 
   const monthOverlap = useSelector(
     (state: RootState) => state.dates.monthOverlap
@@ -64,7 +66,7 @@ const App: FC = () => {
       .add(1, "month")
       .toJSON();
 
-    async function getEvents() {
+    async function getEventsForPublic() {
       try {
         const response = await api.getEventsForPublic(
           firstCalendarDate,
@@ -76,8 +78,25 @@ const App: FC = () => {
       }
     }
 
-    getEvents();
-  }, [calendarDates]);
+    async function getEventsForAuth() {
+      try {
+        const response = await api.getEventsForAuth(
+          localStorage.getItem("jwt"),
+          firstCalendarDate,
+          lastCalendarDate
+        );
+        setEvents(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (user.isAuth) {
+      getEventsForAuth();
+    } else {
+      getEventsForPublic();
+    }
+  }, [calendarDates, user.isAuth]);
 
   // Проверяем, сохранён ли токен в сторадже
   useEffect(() => {
@@ -106,6 +125,7 @@ const App: FC = () => {
       <PopupAuth />
       <PopupEvent />
       <PopupNotification />
+      <PopupConfirm />
     </div>
   );
 };

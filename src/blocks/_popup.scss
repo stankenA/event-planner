@@ -45,6 +45,13 @@
       align-items: flex-start;
       gap: 0;
     }
+
+    &_small {
+      width: 710px;
+      min-height: unset;
+      gap: 64px;
+      padding: 80px 95px 64px;
+    }
   }
 
   &__close {
@@ -135,5 +142,21 @@
     display: inline-block;
     cursor: pointer;
     color: var(--main-colors-accent, #f51b1b);
+  }
+
+  &__confirm-title {
+    max-width: 519px;
+    color: var(--main-colors-black, #0d0c0c);
+    text-align: center;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 100%; /* 36px */
+    letter-spacing: -0.72px;
+    margin: 0;
+  }
+
+  &__confirm-btns {
+    display: flex;
+    gap: 24px;
   }
 }

@@ -11,9 +11,16 @@ type TPopupProps = PropsWithChildren & {
   isOpened: boolean;
   isLarge?: boolean;
   isMedium?: boolean;
+  isSmall?: boolean;
 };
 
-const Popup: FC<TPopupProps> = ({ children, isOpened, isLarge, isMedium }) => {
+const Popup: FC<TPopupProps> = ({
+  children,
+  isOpened,
+  isLarge,
+  isMedium,
+  isSmall,
+}) => {
   const dispatch = useDispatch();
 
   function closeModal() {
@@ -47,10 +54,9 @@ const Popup: FC<TPopupProps> = ({ children, isOpened, isLarge, isMedium }) => {
       onMouseDown={closeOnBg}
     >
       <div
-        className={`popup__wrapper 
-        ${isLarge ? "popup__wrapper_large" : ""}
-        ${isMedium ? "popup__wrapper_medium" : ""}
-        `}
+        className={`popup__wrapper ${isLarge ? "popup__wrapper_large" : ""} ${
+          isMedium ? "popup__wrapper_medium" : ""
+        } ${isSmall ? "popup__wrapper_small" : ""}`}
       >
         <button
           type="button"

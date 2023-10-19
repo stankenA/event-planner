@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Popup from "./Popup";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -11,6 +11,7 @@ import Gallery from "./Gallery";
 import {
   closeAllPopups,
   setIsAuthPopupOpened,
+  setIsConfirmPopupOpened,
   setIsNotificationPopupOpened,
 } from "../redux/popups/slice";
 import Button from "./ui/Button";
@@ -25,6 +26,9 @@ const PopupEvent: FC = () => {
     (state: RootState) => state.popups.isEventPopupOpened
   );
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const isParticipating = event.participants?.some((person) => {
+    return person.id === user.id;
+  });
 
   const date = moment(event.dateStart);
   const day = date.date();
@@ -36,6 +40,10 @@ const PopupEvent: FC = () => {
   function handleLoginClick() {
     dispatch(closeAllPopups());
     dispatch(setIsAuthPopupOpened(true));
+  }
+
+  function handleLeaveClick() {
+    dispatch(setIsConfirmPopupOpened(true));
   }
 
   async function handleJoinEvent() {
@@ -104,7 +112,7 @@ const PopupEvent: FC = () => {
           </button>
           , чтобы присоединиться к событию
         </p>
-      ) : (
+      ) : !isParticipating ? (
         <Button
           type="button"
           handleClick={handleJoinEvent}
@@ -112,6 +120,18 @@ const PopupEvent: FC = () => {
         >
           Присоединиться к событию
         </Button>
+      ) : (
+        <p className="popup__bottom-txt">
+          Вы присоединились к событию. Если передумали, можете{" "}
+          <button
+            type="button"
+            className="popup__bottom-btn"
+            onClick={handleLeaveClick}
+          >
+            отменить участие
+          </button>
+          .
+        </p>
       )}
     </Popup>
   );
