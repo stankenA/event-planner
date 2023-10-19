@@ -1,0 +1,48 @@
+.photos {
+  @include reset-list;
+  display: grid;
+  grid-template-columns: 134px 134px;
+  grid-auto-rows: 81px;
+  gap: 12px;
+
+  &__item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+
+    &:hover {
+      .photos__delete {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+  }
+
+  &__delete {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    @include reset-btn;
+    width: 24px;
+    height: 24px;
+    background: url(../images/cross-icon-white.svg) no-repeat center / contain;
+    @include transition;
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+
+    &:hover {
+      rotate: 90deg;
+    }
+  }
+}

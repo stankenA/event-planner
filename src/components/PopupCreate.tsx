@@ -20,6 +20,8 @@ import {
   setIsNotificationSuccessful,
   setNotificationMessage,
 } from "../redux/notification/slice";
+import DragField from "./DragField";
+import { IndexInfo } from "typescript";
 
 const PopupCreate = () => {
   const dispatch = useDispatch();
@@ -43,6 +45,7 @@ const PopupCreate = () => {
     location: "",
     time: "",
   });
+  const [photos, setPhotos] = useState<string[]>([]);
 
   function checkFormValidity() {
     let errorsObj = {
@@ -147,6 +150,11 @@ const PopupCreate = () => {
     dispatch(setIsCreatePopupOpened(false));
   }
 
+  function handlePhotoDelete(index: number) {
+    const arr = photos.filter((_, i) => i !== index);
+    setPhotos(arr);
+  }
+
   return (
     <Popup
       isOpened={isCreatePopupOpened}
@@ -224,6 +232,19 @@ const PopupCreate = () => {
             noticeTxt=""
           />
           <Participant img={userImg} name={user.username} isOrganizer={true} />
+          <DragField initialPhotos={photos} setPhotos={setPhotos} />
+          <ul className="photos">
+            {photos.map((photo, i) => (
+              <li className="photos__item" key={photo}>
+                <img className="photos__img" src={photo} alt="Фото события" />
+                <button
+                  type="button"
+                  className="photos__delete"
+                  onClick={() => handlePhotoDelete(i)}
+                ></button>
+              </li>
+            ))}
+          </ul>
         </div>
         <Button
           type="submit"
