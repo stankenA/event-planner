@@ -11,9 +11,13 @@ import { setIsAuthPopupOpened } from "../redux/popups/slice";
 
 type TRegistrationFormProps = {
   userEmail: string;
+  setIsLoginForm: (value: boolean) => void;
 };
 
-const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
+const RegistrationForm: FC<TRegistrationFormProps> = ({
+  userEmail,
+  setIsLoginForm,
+}) => {
   const dispatch = useDispatch();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [noticeTxt, setNoticeTxt] = useState({
@@ -23,7 +27,7 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
   });
 
   // Хук для сбора данных с формы и их валидации
-  const { values, handleChange, errors, isValid, setValues } =
+  const { values, handleChange, errors, isValid, setValues, resetForm } =
     useFormWithValidation({
       name: "",
       password: "",
@@ -113,6 +117,8 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({ userEmail }) => {
       }
       dispatch(setUser(response.user));
       dispatch(setIsAuthPopupOpened(false));
+      setIsLoginForm(true);
+      resetForm();
     } catch (error) {
       setNoticeTxt({
         ...noticeTxt,

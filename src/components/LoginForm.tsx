@@ -8,8 +8,8 @@ import { setUser } from "../redux/user/slice";
 import { setIsAuthPopupOpened } from "../redux/popups/slice";
 
 type TLoginFormProps = {
-  setIsLoginForm: (state: boolean) => void;
   setEmail: (email: string) => void;
+  setIsLoginForm: (value: boolean) => void;
 };
 
 const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm, setEmail }) => {

@@ -17,7 +17,10 @@ const PopupAuth: FC = () => {
       {isLoginFrom ? (
         <LoginForm setEmail={setUserEmail} setIsLoginForm={setIsLoginForm} />
       ) : (
-        <RegistrationForm userEmail={userEmail} />
+        <RegistrationForm
+          userEmail={userEmail}
+          setIsLoginForm={setIsLoginForm}
+        />
       )}
     </Popup>
   );

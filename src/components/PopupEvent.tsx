@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import Popup from "./Popup";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
@@ -17,8 +17,6 @@ import {
 import Button from "./ui/Button";
 import { api } from "../utils/api";
 import { setIsNotificationSuccessful } from "../redux/notification/slice";
-import { setEvent } from "../redux/event/slice";
-import { setUser } from "../redux/user/slice";
 import { changeFlag } from "../redux/flag/slice";
 
 const PopupEvent: FC = () => {
@@ -39,6 +37,10 @@ const PopupEvent: FC = () => {
   const month = eventMonths[date.month()];
   const hour = date.hour();
   const minutes = date.minutes();
+
+  const isManyParticipants = event.participants
+    ? event.participants.length > 5
+    : false;
 
   function handleLoginClick() {
     dispatch(closeAllPopups());
@@ -92,15 +94,50 @@ const PopupEvent: FC = () => {
         <h4 className="participants__subtitle">Участники</h4>
         <div className="participants__content">
           <ul className="participants__list">
-            {event.participants?.map((user) => (
-              <Participant
-                key={user.id}
-                name={user.username}
-                img={participantImg}
-                isOrganizer={true}
-              />
-            ))}
+            {isManyParticipants
+              ? event.participants
+                  ?.map((user) => (
+                    <Participant
+                      key={user.id}
+                      name={user.username}
+                      img={participantImg}
+                      isOrganizer={false}
+                    />
+                  ))
+                  .slice(0, 5)
+              : event.participants?.map((user) => (
+                  <Participant
+                    key={user.id}
+                    name={user.username}
+                    img={participantImg}
+                    isOrganizer={false}
+                  />
+                ))}
           </ul>
+          {isManyParticipants ? (
+            <div className="participants__amount">
+              <div className="participants__img-container">
+                <img
+                  src={participantImg}
+                  alt="Фото участника"
+                  className="participants__img"
+                />
+                <img
+                  src={participantImg}
+                  alt="Фото участника"
+                  className="participants__img"
+                />
+                <img
+                  src={participantImg}
+                  alt="Фото участника"
+                  className="participants__img"
+                />
+              </div>
+              <p className="participants__txt">
+                Ещё +{event.participants!.length - 5}
+              </p>
+            </div>
+          ) : null}
         </div>
       </div>
       <Gallery />
