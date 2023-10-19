@@ -15,6 +15,7 @@ import {
 } from "../redux/popups/slice";
 import Button from "./ui/Button";
 import { api } from "../utils/api";
+import { setIsNotificationSuccessful } from "../redux/notification/slice";
 
 const PopupEvent: FC = () => {
   const dispatch = useDispatch();
@@ -46,9 +47,11 @@ const PopupEvent: FC = () => {
       );
       console.log(response);
       dispatch(closeAllPopups());
+      dispatch(setIsNotificationSuccessful(true));
       dispatch(setIsNotificationPopupOpened(true));
     } catch (error) {
-      console.log(error);
+      dispatch(setIsNotificationSuccessful(false));
+      dispatch(setIsNotificationPopupOpened(true));
     } finally {
       setIsButtonDisabled(false);
     }

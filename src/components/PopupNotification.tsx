@@ -10,6 +10,9 @@ const PopupNotification: FC = () => {
   const isNotificationPopupOpened = useSelector(
     (state: RootState) => state.popups.isNotificationPopupOpened
   );
+  const isSuccessful = useSelector(
+    (state: RootState) => state.notification.isSuccessful
+  );
 
   function handleBtnClick() {
     dispatch(closeAllPopups());
@@ -17,7 +20,9 @@ const PopupNotification: FC = () => {
 
   return (
     <Popup isOpened={isNotificationPopupOpened} isMedium={true}>
-      <PopupNotificationSuccess handleBtnClick={handleBtnClick} />
+      {isSuccessful ? (
+        <PopupNotificationSuccess handleBtnClick={handleBtnClick} />
+      ) : null}
     </Popup>
   );
 };
