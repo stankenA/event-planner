@@ -31,6 +31,7 @@
     align-items: center;
     justify-content: center;
     gap: 40px;
+    max-height: 98vh;
 
     &_large {
       width: 1075px;
@@ -111,5 +112,21 @@
     flex-direction: column;
     gap: 32px;
     margin-bottom: 40px;
+  }
+
+  &__bottom-txt {
+    color: var(--main-colors-black, #0d0c0c);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: -0.36px;
+    margin: 0;
+  }
+
+  &__bottom-btn {
+    @include reset-btn;
+    display: inline-block;
+    cursor: pointer;
+    color: var(--main-colors-accent, #f51b1b);
   }
 }

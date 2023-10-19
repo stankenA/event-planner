@@ -13,6 +13,7 @@ class API {
     }
 
     if (res.ok) {
+      console.log(res.ok);
       return res.json();
     }
 

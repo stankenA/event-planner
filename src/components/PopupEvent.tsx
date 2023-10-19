@@ -1,18 +1,21 @@
-import React, { FC, useCallback, useRef } from "react";
+import React, { FC } from "react";
 import Popup from "./Popup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import Participant from "./Participant";
 import moment from "moment";
 import { weekdays } from "../utils/contstants";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
 
 import participantImg from "../images/user-avatar-default.png";
-import galleryImg from "../images/gallery-img.png";
+import Gallery from "./Gallery";
+import { closeAllPopups, setIsAuthPopupOpened } from "../redux/popups/slice";
+import Button from "./ui/Button";
+import { api } from "../utils/api";
 
 const PopupEvent: FC = () => {
+  const dispatch = useDispatch();
   const event = useSelector((state: RootState) => state.event);
+  const user = useSelector((state: RootState) => state.user);
   const isEventPopupOpened = useSelector(
     (state: RootState) => state.popups.isEventPopupOpened
   );
@@ -23,17 +26,23 @@ const PopupEvent: FC = () => {
   const hour = date.hour();
   const minutes = date.minutes();
 
-  const sliderRef = useRef<any>(null);
+  function handleLoginClick() {
+    dispatch(closeAllPopups());
+    dispatch(setIsAuthPopupOpened(true));
+  }
 
-  const handlePrev = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.swiper.slidePrev();
-  }, []);
-
-  const handleNext = useCallback(() => {
-    if (!sliderRef.current) return;
-    sliderRef.current.swiper.slideNext();
-  }, []);
+  async function handleJoinEvent() {
+    try {
+      const response = await api.joinEvent(
+        localStorage.getItem("jwt"),
+        event.id
+      );
+      console.log(response);
+      dispatch(closeAllPopups());
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Popup isOpened={isEventPopupOpened} isLarge={true}>
@@ -67,49 +76,23 @@ const PopupEvent: FC = () => {
           </ul>
         </div>
       </div>
-      <div className="gallery">
-        <div className="gallery__top">
-          <h4 className="gallery__subtitle">Галерея</h4>
-          <div className="gallery__navigation">
-            <button
-              className="gallery__btn nav-btn nav-btn_prev"
-              onClick={handlePrev}
-            ></button>
-            <button
-              className="gallery__btn nav-btn nav-btn_next"
-              onClick={handleNext}
-            ></button>
-          </div>
-        </div>
-        <Swiper
-          ref={sliderRef}
-          slidesPerView={"auto"}
-          spaceBetween={16}
-          grabCursor={true}
-          className="gallery__swiper"
-          modules={[Navigation, Pagination]}
-          pagination={{ clickable: true }}
-        >
-          <SwiperSlide className="gallery__slide">
-            <img src={galleryImg} alt="Фото события" className="gallery__img" />
-          </SwiperSlide>
-          <SwiperSlide className="gallery__slide">
-            <img src={galleryImg} alt="Фото события" className="gallery__img" />
-          </SwiperSlide>
-          <SwiperSlide className="gallery__slide">
-            <img src={galleryImg} alt="Фото события" className="gallery__img" />
-          </SwiperSlide>
-          <SwiperSlide className="gallery__slide">
-            <img src={galleryImg} alt="Фото события" className="gallery__img" />
-          </SwiperSlide>
-          <SwiperSlide className="gallery__slide">
-            <img src={galleryImg} alt="Фото события" className="gallery__img" />
-          </SwiperSlide>
-          <SwiperSlide className="gallery__slide">
-            <img src={galleryImg} alt="Фото события" className="gallery__img" />
-          </SwiperSlide>
-        </Swiper>
-      </div>
+      <Gallery />
+      {!user.isAuth ? (
+        <p className="popup__bottom-txt">
+          <button
+            type="button"
+            className="popup__bottom-btn"
+            onClick={handleLoginClick}
+          >
+            Войдите
+          </button>
+          , чтобы присоединиться к событию
+        </p>
+      ) : (
+        <Button type="button" handleClick={handleJoinEvent}>
+          Присоединиться к событию
+        </Button>
+      )}
     </Popup>
   );
 };
