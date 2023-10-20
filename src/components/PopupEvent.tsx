@@ -63,7 +63,7 @@ const PopupEvent: FC = () => {
     setIsButtonDisabled(true);
     try {
       const response = await api.joinEvent(
-        localStorage.getItem("jwt"),
+        localStorage.getItem("jwt")!,
         event.id
       );
       dispatch(

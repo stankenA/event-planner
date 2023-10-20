@@ -116,7 +116,7 @@ const PopupCreate = () => {
     const jwt = localStorage.getItem("jwt");
 
     try {
-      const response = await api.createEvent(jwt, newEvent);
+      const response = await api.createEvent(jwt!, newEvent);
       console.log(response);
       dispatch(setIsCreatePopupOpened(false));
       dispatch(triggerFlag());

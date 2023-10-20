@@ -83,7 +83,7 @@ const App: FC = () => {
     async function getEventsForAuth() {
       try {
         const response = await api.getEventsForAuth(
-          localStorage.getItem("jwt"),
+          localStorage.getItem("jwt")!,
           firstCalendarDate,
           lastCalendarDate
         );
@@ -104,7 +104,7 @@ const App: FC = () => {
   useEffect(() => {
     async function checkUser() {
       try {
-        const response = await api.getCurrentUser(localStorage.getItem("jwt"));
+        const response = await api.getCurrentUser(localStorage.getItem("jwt")!);
         dispatch(setUser(response));
       } catch (error) {
         console.log(error);

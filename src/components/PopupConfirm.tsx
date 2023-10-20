@@ -17,7 +17,7 @@ const PopupConfirm = () => {
   async function handleLeaveEvent() {
     try {
       const response = await api.leaveEvent(
-        localStorage.getItem("jwt"),
+        localStorage.getItem("jwt")!,
         eventId
       );
       dispatch(triggerFlag());

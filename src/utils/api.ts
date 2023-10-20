@@ -1,13 +1,15 @@
-// TODO: переписать на TS
-
 import { BASE_URL } from "./contstants";
+import { TEvent } from "./types";
 
+// TODO: что делать с any
 class API {
-  constructor({ url }) {
+  private _url: string;
+
+  constructor({ url }: { url: string }) {
     this._url = url;
   }
 
-  _checkResponse(res) {
+  _checkResponse(res: any) {
     if (res.status === 204) {
       return;
     }
@@ -19,12 +21,12 @@ class API {
     return Promise.reject(res);
   }
 
-  _request(url, options) {
+  _request(url: string, options: {}) {
     return fetch(`${this._url}${url}`, options).then(this._checkResponse);
   }
 
   // Auth
-  register(username, email, password) {
+  register(username: string, email: string, password: string) {
     return this._request("/auth/local/register", {
       method: "POST",
       headers: {
@@ -34,7 +36,7 @@ class API {
     }).then((res) => res);
   }
 
-  login(identifier, password) {
+  login(identifier: string, password: string) {
     return this._request("/auth/local", {
       method: "POST",
       headers: {
@@ -49,7 +51,7 @@ class API {
     });
   }
 
-  getCurrentUser(token) {
+  getCurrentUser(token: string) {
     return this._request("/users/me", {
       method: "GET",
       headers: {
@@ -59,13 +61,13 @@ class API {
   }
 
   // Users
-  checkUserExists(email) {
+  checkUserExists(email: string) {
     return this._request(`/taken-emails/${email}`, {
       method: "GET",
     }).then((data) => data);
   }
 
-  getAllUsers(token) {
+  getAllUsers(token: string) {
     return this._request("/users", {
       method: "GET",
       headers: {
@@ -75,7 +77,7 @@ class API {
   }
 
   // Events
-  createEvent(token, eventData) {
+  createEvent(token: string, eventData: {}) {
     return this._request("/events", {
       method: "POST",
       headers: {
@@ -86,7 +88,7 @@ class API {
     }).then((data) => data);
   }
 
-  updateEventDataWithPhotos(token, eventData) {
+  updateEventDataWithPhotos(token: string, eventData: TEvent) {
     return this._request(`/events/${eventData.id}`, {
       method: "PUT",
       headers: {
@@ -97,7 +99,7 @@ class API {
     }).then((data) => data);
   }
 
-  deleteEvent(token, eventId) {
+  deleteEvent(token: string, eventId: number) {
     return this._request(`/events/${eventId}`, {
       method: "DELETE",
       headers: {
@@ -106,7 +108,7 @@ class API {
     }).then((data) => data);
   }
 
-  getEventsForPublic(startDate, endDate) {
+  getEventsForPublic(startDate: string, endDate: string) {
     let finalURL;
 
     if (startDate && !endDate) {
@@ -122,7 +124,7 @@ class API {
     }).then((data) => data);
   }
 
-  getEventsForAuth(token, startDate, endDate) {
+  getEventsForAuth(token: string, startDate: string, endDate: string) {
     let finalURL;
 
     if (startDate && !endDate) {
@@ -141,7 +143,7 @@ class API {
     }).then((data) => data);
   }
 
-  joinEvent(token, eventId) {
+  joinEvent(token: string, eventId: number) {
     return this._request(`/events/${eventId}/join`, {
       method: "POST",
       headers: {
@@ -150,7 +152,7 @@ class API {
     }).then((data) => data);
   }
 
-  leaveEvent(token, eventId) {
+  leaveEvent(token: string, eventId: number) {
     return this._request(`/events/${eventId}/leave`, {
       method: "POST",
       headers: {
@@ -160,7 +162,7 @@ class API {
   }
 
   // Files
-  getFiles(token) {
+  getFiles(token: string) {
     return this._request(`/upload/files`, {
       method: "GET",
       headers: {
@@ -169,7 +171,7 @@ class API {
     }).then((data) => data);
   }
 
-  uploadFiles(token, files) {
+  uploadFiles(token: string, files: FileList) {
     return this._request(`/upload/files`, {
       method: "POST",
       headers: {
