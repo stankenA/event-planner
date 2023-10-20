@@ -1,12 +1,5 @@
 import React, { FC, PropsWithChildren, useEffect } from "react";
-
-type TPopupProps = PropsWithChildren & {
-  isOpened: boolean;
-  isLarge?: boolean;
-  isMedium?: boolean;
-  isSmall?: boolean;
-  handleClose: () => void;
-};
+import { TPopupProps } from "../utils/types";
 
 const Popup: FC<TPopupProps> = ({
   children,

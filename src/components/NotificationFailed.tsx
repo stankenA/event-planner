@@ -3,6 +3,7 @@ import Button from "./ui/Button";
 import pigeonImg from "../images/pigeon-img.png";
 import { useDispatch } from "react-redux";
 import { closeAllPopups } from "../redux/popups/slice";
+
 const NotificationFailed: FC = () => {
   const dispatch = useDispatch();
 

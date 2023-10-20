@@ -1,20 +1,5 @@
 import React, { ChangeEvent, FC, useState } from "react";
-
-type TInput = {
-  type: string;
-  name: string;
-  label: string;
-  placeholder: string;
-  noticeTxt: string;
-  isFocused?: boolean;
-  required?: boolean;
-  minLength?: number;
-  maxLength?: number;
-  isValid?: boolean;
-  pattern?: string;
-  handleChange?: (evt: ChangeEvent<HTMLInputElement>) => void;
-  handleClear?: () => void;
-};
+import { TInput } from "../../utils/types";
 
 const Input: FC<TInput> = ({
   type,

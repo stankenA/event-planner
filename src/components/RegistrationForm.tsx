@@ -8,11 +8,7 @@ import { api } from "../utils/api";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/user/slice";
 import { setIsAuthPopupOpened } from "../redux/popups/slice";
-
-type TRegistrationFormProps = {
-  userEmail: string;
-  setIsLoginForm: (value: boolean) => void;
-};
+import { TRegistrationFormProps } from "../utils/types";
 
 const RegistrationForm: FC<TRegistrationFormProps> = ({
   userEmail,

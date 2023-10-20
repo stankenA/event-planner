@@ -1,10 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TFlagSlice } from "../../utils/types";
 
-type Tflag = {
-  flag: boolean;
-};
-
-export const initialState: Tflag = {
+export const initialState: TFlagSlice = {
   flag: false,
 };
 

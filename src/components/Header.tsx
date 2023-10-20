@@ -16,9 +16,7 @@ import {
 import { RootState } from "../redux/store";
 import { logoutUser } from "../redux/user/slice";
 
-type THeaderProps = {};
-
-const Header: FC<THeaderProps> = () => {
+const Header: FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
   const month = useSelector((state: RootState) => state.dates.month);

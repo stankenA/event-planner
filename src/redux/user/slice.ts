@@ -1,11 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type TUserSlice = {
-  id?: number;
-  username: string;
-  email: string;
-  isAuth: boolean;
-};
+import { TUserSlice } from "../../utils/types";
 
 export const initialState: TUserSlice = {
   username: "",

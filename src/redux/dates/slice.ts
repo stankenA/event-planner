@@ -1,11 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { currentMonth, currentYear } from "../../utils/contstants";
-
-type TDatesSlice = {
-  month: number;
-  year: number;
-  monthOverlap: number;
-};
+import { TDatesSlice } from "../../utils/types";
 
 export const initialState: TDatesSlice = {
   month: currentMonth,

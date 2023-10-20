@@ -1,12 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type TPopupsSlice = {
-  isAuthPopupOpened: boolean;
-  isEventPopupOpened: boolean;
-  isNotificationPopupOpened: boolean;
-  isConfirmPopupOpened: boolean;
-  isCreatePopupOpened: boolean;
-};
+import { TPopupsSlice } from "../../utils/types";
 
 export const initialState: TPopupsSlice = {
   isAuthPopupOpened: false,

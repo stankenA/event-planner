@@ -1,10 +1,5 @@
 import React, { FC } from "react";
-
-type TParticipantProps = {
-  img: string;
-  name: string;
-  isOrganizer: boolean;
-};
+import { TParticipantProps } from "../utils/types";
 
 const Participant: FC<TParticipantProps> = ({ img, name, isOrganizer }) => {
   return (

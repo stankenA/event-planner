@@ -1,23 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TNotificationMessage, TNotificationSlice } from "../../utils/types";
 
-type TNotificationMessage = {
-  heading: string;
-  case: string;
-  title: string;
-  dayOfWeek: string;
-  day: number;
-  month: string;
-  time: string;
-  location: string;
-  isUnicorn: boolean;
-};
-
-type TNotification = {
-  isSuccessful: boolean;
-  message: TNotificationMessage;
-};
-
-export const initialState: TNotification = {
+export const initialState: TNotificationSlice = {
   isSuccessful: false,
   message: {
     heading: "",

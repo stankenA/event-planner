@@ -1,13 +1,5 @@
 import React, { ChangeEvent, FC, useState } from "react";
-
-type TTextarea = {
-  name: string;
-  label: string;
-  required: boolean;
-  noticeTxt: string;
-  maxLength: number;
-  handleChange: (evt: ChangeEvent<HTMLTextAreaElement>) => void;
-};
+import { TTextarea } from "../../utils/types";
 
 const Textarea: FC<TTextarea> = ({
   name,

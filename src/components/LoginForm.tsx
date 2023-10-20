@@ -6,11 +6,7 @@ import { api } from "../utils/api";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/user/slice";
 import { setIsAuthPopupOpened } from "../redux/popups/slice";
-
-type TLoginFormProps = {
-  setEmail: (email: string) => void;
-  setIsLoginForm: (value: boolean) => void;
-};
+import { TLoginFormProps } from "../utils/types";
 
 const LoginForm: FC<TLoginFormProps> = ({ setIsLoginForm, setEmail }) => {
   const dispatch = useDispatch();

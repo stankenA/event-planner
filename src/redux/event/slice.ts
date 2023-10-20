@@ -1,15 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TEvent } from "../../utils/types";
 
-// type TEvent = {
-//   id?: number;
-//   dateStart: string;
-//   title: string;
-//   description: string;
-//   location: string;
-//   dateEnd?: string;
-// };
-
 export const initialState: TEvent = {
   id: 0,
   dateStart: "",

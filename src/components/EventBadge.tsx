@@ -9,6 +9,7 @@ const EventBadge: FC<TEventBadge> = ({ date, event, isInactive }) => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 
+  // Клик по бэйджику события
   function handleEventClick() {
     dispatch(
       setEvent({
@@ -19,10 +20,12 @@ const EventBadge: FC<TEventBadge> = ({ date, event, isInactive }) => {
     dispatch(setIsEventPopupOpened(true));
   }
 
+  // Участвует ли пользователь в событии
   const isParticipating = event.participants?.some(
     (person) => person.id === user.id
   );
 
+  // Является ли пользователь организатором события
   const isOrganizer = user.id && event.owner?.id === user.id;
 
   return (
