@@ -21,6 +21,18 @@ import {
 } from "../redux/notification/slice";
 import { useFormWithValidation } from "../hooks/useFormWithValidation";
 import userImg from "../images/user-avatar-default.png";
+import { TUser } from "../utils/types";
+import defaultAvatar from "../images/user-avatar-default.png";
+
+type TPopupCreateErrors = {
+  title: string;
+  description: string;
+  dateStart: string;
+  dateEnd: string;
+  location: string;
+  time: string;
+  participants?: string;
+};
 
 const PopupCreate = () => {
   const dispatch = useDispatch();
@@ -29,7 +41,7 @@ const PopupCreate = () => {
     (state: RootState) => state.popups.isCreatePopupOpened
   );
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  const [noticeTxt, setNoticeTxt] = useState({
+  const [noticeTxt, setNoticeTxt] = useState<TPopupCreateErrors>({
     title: "",
     description: "",
     dateStart: "",
@@ -49,6 +61,11 @@ const PopupCreate = () => {
   const [filesArr, setFilesArr] = useState<File[]>([]);
   const [photosArr, setPhotosArr] = useState<string[]>([]);
   const [photosIdArr, setPhotosIdArr] = useState<string[]>([]);
+  // Пользователи
+  const [initialUsers, setInitialUsers] = useState<TUser[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<TUser[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<TUser[]>([]);
+  const [isParticipantsShown, setIsParticipantsShown] = useState(false);
 
   // Проверка валидности формы
   function checkFormValidity() {
@@ -195,6 +212,42 @@ const PopupCreate = () => {
     setPhotosArr(newArr);
   }, [filesArr]);
 
+  // Получаем всех пользователей
+  useEffect(() => {
+    async function getUsers() {
+      const jwt = localStorage.getItem("jwt");
+      try {
+        const response = await api.getAllUsers(jwt!);
+        setInitialUsers(response);
+        setFilteredUsers(response);
+      } catch (error) {
+        setNoticeTxt({
+          ...noticeTxt,
+          participants: "Ошибка запроса пользователей",
+        });
+      }
+    }
+
+    getUsers();
+  }, []);
+
+  // Слежение за отображением попапа участников
+  useEffect(() => {
+    if (values.participants) {
+      setIsParticipantsShown(true);
+    } else {
+      setIsParticipantsShown(false);
+    }
+
+    const filteredUsers = initialUsers.filter((user) => {
+      return user.username.includes(values.participants);
+    });
+
+    setFilteredUsers(filteredUsers);
+  }, [values.participants]);
+
+  // TODO: сделать корректную очистку полей
+
   return (
     <Popup
       isOpened={isCreatePopupOpened}
@@ -263,14 +316,42 @@ const PopupCreate = () => {
               noticeTxt={noticeTxt.location}
             />
           </div>
-          <Input
-            type="text"
-            name="participants"
-            label="Участники"
-            placeholder=""
-            handleChange={() => console.log("boop")}
-            noticeTxt=""
-          />
+          <div className="participants-input">
+            <Input
+              type="text"
+              name="participants"
+              label="Участники"
+              placeholder=""
+              handleChange={handleChange}
+              noticeTxt={noticeTxt.participants}
+            />
+            <div
+              className={`participants-input__list-container ${
+                isParticipantsShown
+                  ? "participants-input__list-container_opened"
+                  : ""
+              }`}
+            >
+              <ul className="participants-input__list">
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((user) => (
+                    <li className="participants-input__item" key={user.id}>
+                      <img
+                        src={defaultAvatar}
+                        alt="Аватар пользователя"
+                        className="participants-input__img"
+                      />
+                      <p className="participants-input__txt">{user.username}</p>
+                    </li>
+                  ))
+                ) : (
+                  <p className="participants-input__txt participants-input__txt_empty">
+                    Пользователей с таким именем не найдено
+                  </p>
+                )}
+              </ul>
+            </div>
+          </div>
           <Participant img={userImg} name={user.username} isOrganizer={true} />
           <DragField filesArr={filesArr} setFilesArr={setFilesArr} />
           <ul className="photos">

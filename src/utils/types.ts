@@ -15,7 +15,7 @@ export type TInput = {
   name: string;
   label: string;
   placeholder: string;
-  noticeTxt: string;
+  noticeTxt?: string;
   isFocused?: boolean;
   required?: boolean;
   minLength?: number;
