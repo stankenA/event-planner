@@ -41,7 +41,7 @@ const PopupConfirm = () => {
         Вы действительно хотите отменить участие?
       </h2>
       <div className="popup__confirm-btns">
-        <Button type="button" handleClick={handleClosePopup}>
+        <Button type="button" handleClick={handleClosePopup} isSecondary={true}>
           Нет
         </Button>
         <Button type="submit" handleClick={handleLeaveEvent}>

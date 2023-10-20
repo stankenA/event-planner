@@ -7,6 +7,7 @@ const Button: FC<TButton> = ({
   isDisabled,
   isRegistration,
   className,
+  isSecondary,
   handleClick,
 }) => {
   function click(evt: MouseEvent<HTMLButtonElement>) {
@@ -19,7 +20,9 @@ const Button: FC<TButton> = ({
       type={type}
       className={`button ${className ? className : ""} ${
         isDisabled ? "button_disabled" : ""
-      }  ${isRegistration ? "button_registration" : ""}`}
+      }  ${isRegistration ? "button_registration" : ""} ${
+        isSecondary ? "button_secondary" : ""
+      }`}
       onClick={click}
       disabled={isDisabled}
     >

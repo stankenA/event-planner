@@ -3,6 +3,7 @@ export type TButton = React.PropsWithChildren & {
   isDisabled?: boolean;
   isRegistration?: boolean;
   className?: string;
+  isSecondary?: boolean;
   handleClick: () => void;
 };
 
