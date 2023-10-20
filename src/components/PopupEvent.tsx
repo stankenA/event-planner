@@ -181,7 +181,7 @@ const PopupEvent: FC = () => {
           ) : null}
         </div>
       </div>
-      <Gallery />
+      <Gallery photos={event.photos} />
       {event.isInactive ? null : !user.isAuth ? (
         <p className="popup__bottom-txt">
           <button

@@ -1,9 +1,14 @@
-import React, { useCallback, useRef } from "react";
+import React, { FC, useCallback, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import galleryImg from "../images/gallery-img.png";
+import { TEventPhotos } from "../utils/types";
+import { BASE_URL } from "../utils/contstants";
 
-const Gallery = () => {
+type TGallery = {
+  photos?: TEventPhotos[];
+};
+
+const Gallery: FC<TGallery> = ({ photos }) => {
   const sliderRef = useRef<any>(null);
 
   const handlePrev = useCallback(() => {
@@ -15,49 +20,49 @@ const Gallery = () => {
     if (!sliderRef.current) return;
     sliderRef.current.swiper.slideNext();
   }, []);
+
   return (
     <div className="gallery">
       <div className="gallery__top">
         <h4 className="gallery__subtitle">Галерея</h4>
-        <div className="gallery__navigation">
-          <button
-            className="gallery__btn nav-btn nav-btn_prev"
-            onClick={handlePrev}
-          ></button>
-          <button
-            className="gallery__btn nav-btn nav-btn_next"
-            onClick={handleNext}
-          ></button>
-        </div>
+        {photos && photos.length > 0 ? (
+          <div className="gallery__navigation">
+            <button
+              className="gallery__btn nav-btn nav-btn_prev"
+              onClick={handlePrev}
+            ></button>
+            <button
+              className="gallery__btn nav-btn nav-btn_next"
+              onClick={handleNext}
+            ></button>
+          </div>
+        ) : null}
       </div>
-      <Swiper
-        ref={sliderRef}
-        slidesPerView={"auto"}
-        spaceBetween={16}
-        grabCursor={true}
-        className="gallery__swiper"
-        modules={[Navigation, Pagination]}
-        pagination={{ clickable: true }}
-      >
-        <SwiperSlide className="gallery__slide">
-          <img src={galleryImg} alt="Фото события" className="gallery__img" />
-        </SwiperSlide>
-        <SwiperSlide className="gallery__slide">
-          <img src={galleryImg} alt="Фото события" className="gallery__img" />
-        </SwiperSlide>
-        <SwiperSlide className="gallery__slide">
-          <img src={galleryImg} alt="Фото события" className="gallery__img" />
-        </SwiperSlide>
-        <SwiperSlide className="gallery__slide">
-          <img src={galleryImg} alt="Фото события" className="gallery__img" />
-        </SwiperSlide>
-        <SwiperSlide className="gallery__slide">
-          <img src={galleryImg} alt="Фото события" className="gallery__img" />
-        </SwiperSlide>
-        <SwiperSlide className="gallery__slide">
-          <img src={galleryImg} alt="Фото события" className="gallery__img" />
-        </SwiperSlide>
-      </Swiper>
+      {photos && photos.length > 0 ? (
+        <Swiper
+          ref={sliderRef}
+          slidesPerView={"auto"}
+          spaceBetween={16}
+          grabCursor={true}
+          className="gallery__swiper"
+          modules={[Navigation, Pagination]}
+          pagination={{ clickable: true }}
+        >
+          {photos
+            ? photos.map((item) => (
+                <SwiperSlide className="gallery__slide" key={item.id}>
+                  <img
+                    src={`${BASE_URL.slice(0, -4)}${item.url}`}
+                    alt="Фото события"
+                    className="gallery__img"
+                  />
+                </SwiperSlide>
+              ))
+            : null}
+        </Swiper>
+      ) : (
+        <p className="gallery__empty">У события нет фотографий</p>
+      )}
     </div>
   );
 };

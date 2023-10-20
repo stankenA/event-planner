@@ -38,4 +38,11 @@
     display: block;
     border-radius: 24px;
   }
+
+  &__empty {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    text-align: center;
+    color: var(--Gray, #b3b3bc);
+  }
 }

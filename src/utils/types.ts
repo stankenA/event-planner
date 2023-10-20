@@ -48,6 +48,11 @@ export type TUser = {
 };
 
 // Event
+export type TEventPhotos = {
+  id: number;
+  url: string;
+};
+
 export type TEvent = {
   id: number;
   dateStart: string;
@@ -57,7 +62,7 @@ export type TEvent = {
   dateEnd?: string | null;
   createdAt: string;
   updatedAt: string;
-  photos?: string[] | null;
+  photos?: TEventPhotos[];
   participants?: TUser[];
   owner?: TUser;
   updatedBy?: string | null;

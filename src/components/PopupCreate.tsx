@@ -137,7 +137,7 @@ const PopupCreate = () => {
       participants: [user],
     };
 
-    // const photosData = processPhotoFiles(filesArr);
+    const photosData = processPhotoFiles(filesArr);
     const jwt = localStorage.getItem("jwt");
 
     try {
