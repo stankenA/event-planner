@@ -96,8 +96,6 @@ const PopupEvent: FC = () => {
     dispatch(setIsEventPopupOpened(false));
   }
 
-  console.log(event);
-
   return (
     <Popup
       isOpened={isEventPopupOpened}

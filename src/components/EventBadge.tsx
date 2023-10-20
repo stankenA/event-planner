@@ -23,7 +23,7 @@ const EventBadge: FC<TEventBadge> = ({ date, event, isInactive }) => {
     (person) => person.id === user.id
   );
 
-  const isOrganizer = event.owner?.id === user.id;
+  const isOrganizer = user.id && event.owner?.id === user.id;
 
   return (
     <button

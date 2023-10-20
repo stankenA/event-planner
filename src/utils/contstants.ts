@@ -1,4 +1,4 @@
-export const BASE_URL: string = "http://localhost:1337/api"; // http://localhost:1337/api
+export const BASE_URL: string = "https://planner.rdclr.ru/api"; // http://localhost:1337/api
 
 export const months: string[] = [
   "Январь",

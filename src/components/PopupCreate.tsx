@@ -46,7 +46,6 @@ const PopupCreate = () => {
   });
   const [fileList, setFileList] = useState<FileList | null>(null);
   const [photos, setPhotos] = useState<string[]>([]);
-  console.log(fileList);
 
   function checkFormValidity() {
     let errorsObj = {
