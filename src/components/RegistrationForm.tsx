@@ -127,7 +127,9 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({
 
   // Клик по кнопке Зарегистрироваться
   function handleSubmitClick() {
-    if (checkFormValidity()) {
+    const isRegistrationFormValid = checkFormValidity();
+
+    if (isRegistrationFormValid) {
       registerUser();
     }
   }

@@ -46,7 +46,7 @@ const NotificationSuccess: FC = () => {
       </Button>
       <img
         src={notification.isUnicorn ? unicornImg : handImg}
-        alt="Рука"
+        alt={`${notification.isUnicorn ? "Единорог" : "Рука"}`}
         className={`notification__img ${
           notification.isUnicorn ? "notification__img_unicorn" : ""
         }`}

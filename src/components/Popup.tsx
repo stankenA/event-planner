@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { TPopupProps } from "../utils/types";
 
 const Popup: FC<TPopupProps> = ({
@@ -9,12 +9,14 @@ const Popup: FC<TPopupProps> = ({
   isSmall,
   handleClose,
 }) => {
+  //Закрытие попапа на бэкграунд
   function closeOnBg(evt: any) {
     if ((evt.target as Element).classList.contains("popup_opened")) {
       handleClose();
     }
   }
 
+  // Слушатель закрытия на Esc
   useEffect(() => {
     function closeOnEsc(evt: KeyboardEvent) {
       if (evt.key === "Escape") {

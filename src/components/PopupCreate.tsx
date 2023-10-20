@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import Popup from "./Popup";
-import Input from "./ui/Input";
-import Participant from "./Participant";
-import userImg from "../images/user-avatar-default.png";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
 import Button from "./ui/Button";
+import Input from "./ui/Input";
 import Textarea from "./ui/Textarea";
-import { useFormWithValidation } from "../hooks/useFormWithValidation";
-import { api } from "../utils/api";
+import Participant from "./Participant";
+import DragField from "./DragField";
 import moment from "moment";
 import { eventMonths, timeRegExp, weekdays } from "../utils/contstants";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { api } from "../utils/api";
 import {
   setIsCreatePopupOpened,
   setIsNotificationPopupOpened,
@@ -20,11 +19,14 @@ import {
   setIsNotificationSuccessful,
   setNotificationMessage,
 } from "../redux/notification/slice";
-import DragField from "./DragField";
+import { useFormWithValidation } from "../hooks/useFormWithValidation";
+import userImg from "../images/user-avatar-default.png";
 
 const PopupCreate = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  // Сообщения об ошибках
   const [noticeTxt, setNoticeTxt] = useState({
     title: "",
     description: "",
@@ -33,7 +35,6 @@ const PopupCreate = () => {
     location: "",
     time: "",
   });
-  const user = useSelector((state: RootState) => state.user);
   const isCreatePopupOpened = useSelector(
     (state: RootState) => state.popups.isCreatePopupOpened
   );
@@ -100,6 +101,7 @@ const PopupCreate = () => {
     return isFormValid;
   }
 
+  // Создание нового ивента
   async function createNewEvent() {
     const dateStart = moment(`${values.dateStart} ${values.time}`);
     const dateEnd = moment(`${values.dateEnd}`);
@@ -141,7 +143,8 @@ const PopupCreate = () => {
   }
 
   function handleSubmitClick() {
-    if (checkFormValidity()) {
+    const isCreateFormValid = checkFormValidity();
+    if (isCreateFormValid) {
       createNewEvent();
     }
   }

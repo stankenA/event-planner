@@ -59,6 +59,7 @@ const PopupEvent: FC = () => {
     dispatch(setIsConfirmPopupOpened(true));
   }
 
+  // Функция становления участников события
   async function handleJoinEvent() {
     setIsButtonDisabled(true);
     try {

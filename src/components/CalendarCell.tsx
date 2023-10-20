@@ -22,6 +22,7 @@ const CalendarCell: FC<TCalendarCellProps> = ({ date, events }) => {
     return moment(date).isBetween(startEventDate, moment(), "day", "[)");
   }
 
+  // Разбор даты на составные части
   const dateArr = date.split("-");
   const cellDay = +dateArr[2];
   const cellMonth = +dateArr[1];

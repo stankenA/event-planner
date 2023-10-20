@@ -7,12 +7,7 @@ type TDragFieldProps = {
   setPhotoFiles?: React.Dispatch<React.SetStateAction<FileList | undefined>>;
 };
 
-const DragField: FC<TDragFieldProps> = ({
-  initialPhotos,
-  setPhotos,
-  // photoFiles,
-  // setPhotoFiles,
-}) => {
+const DragField: FC<TDragFieldProps> = ({ initialPhotos, setPhotos }) => {
   const [dragActive, setDragActive] = React.useState(false);
 
   const handleDrag = function (evt: React.DragEvent<HTMLDivElement>) {
