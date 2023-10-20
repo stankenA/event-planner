@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Popup from "./Popup";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
@@ -25,8 +25,10 @@ import userImg from "../images/user-avatar-default.png";
 const PopupCreate = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+  const isCreatePopupOpened = useSelector(
+    (state: RootState) => state.popups.isCreatePopupOpened
+  );
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  // Сообщения об ошибках
   const [noticeTxt, setNoticeTxt] = useState({
     title: "",
     description: "",
@@ -35,9 +37,6 @@ const PopupCreate = () => {
     location: "",
     time: "",
   });
-  const isCreatePopupOpened = useSelector(
-    (state: RootState) => state.popups.isCreatePopupOpened
-  );
   const { values, handleChange, errors, isValid } = useFormWithValidation({
     title: "",
     description: "",
@@ -45,9 +44,13 @@ const PopupCreate = () => {
     location: "",
     time: "",
   });
-  const [fileList, setFileList] = useState<FileList | null>(null);
-  const [photos, setPhotos] = useState<string[]>([]);
 
+  // Drag and drop переменные
+  const [filesArr, setFilesArr] = useState<File[]>([]);
+  const [photosArr, setPhotosArr] = useState<string[]>([]);
+  const [photosIdArr, setPhotosIdArr] = useState<string[]>([]);
+
+  // Проверка валидности формы
   function checkFormValidity() {
     let errorsObj = {
       title: "",
@@ -101,6 +104,25 @@ const PopupCreate = () => {
     return isFormValid;
   }
 
+  // Обработка фото
+  function handlePhotoDelete(index: number) {
+    const photos = photosArr.filter((_, i) => i !== index);
+    const files = filesArr.filter((_, i) => i !== index);
+    setPhotosArr(photos);
+    setFilesArr(files);
+  }
+
+  // Обработка файлов для отправки на бэк
+  function processPhotoFiles(filesArr: File[]) {
+    const formData = new FormData();
+
+    filesArr.forEach((item, i) => {
+      formData.append(`file-${i}`, item, item.name);
+    });
+
+    return formData;
+  }
+
   // Создание нового ивента
   async function createNewEvent() {
     const dateStart = moment(`${values.dateStart} ${values.time}`);
@@ -115,13 +137,21 @@ const PopupCreate = () => {
       participants: [user],
     };
 
+    // const photosData = processPhotoFiles(filesArr);
     const jwt = localStorage.getItem("jwt");
 
     try {
-      const response = await api.createEvent(jwt!, newEvent);
-      console.log(response);
+      // const photosResponse = await api.uploadFiles(jwt!, photosData);
+      const eventResponse = await api.createEvent(jwt!, newEvent);
+      // const updatedResponse = await api.updateEventDataWithPhotos(
+      //   jwt!,
+      //   eventResponse.id,
+      //   photosIdArr
+      // );
+      // console.log({ 1: photosResponse, 2: eventResponse, 3: updatedResponse });
       dispatch(setIsCreatePopupOpened(false));
       dispatch(triggerFlag());
+      dispatch(setIsNotificationSuccessful(true));
       dispatch(
         setNotificationMessage({
           heading: "Ура!",
@@ -137,11 +167,13 @@ const PopupCreate = () => {
       );
       dispatch(setIsNotificationPopupOpened(true));
     } catch (error) {
+      console.log(error);
       dispatch(setIsNotificationSuccessful(false));
       dispatch(setIsNotificationPopupOpened(true));
     }
   }
 
+  // Нажатие на кнопку Создать
   function handleSubmitClick() {
     const isCreateFormValid = checkFormValidity();
     if (isCreateFormValid) {
@@ -149,21 +181,19 @@ const PopupCreate = () => {
     }
   }
 
+  // Закрытие попапа
   function handleClosePopup() {
     dispatch(setIsCreatePopupOpened(false));
   }
 
-  // function fn() {
-  //   setPhotos([
-  //     ...photos,
-  //     URL.createObjectURL(evt.dataTransfer.files[0]),
-  //   ]);
-  // }
+  // Добавление новых фото
+  useEffect(() => {
+    const newArr = filesArr.map((file) => {
+      return URL.createObjectURL(file);
+    });
 
-  function handlePhotoDelete(index: number) {
-    const arr = photos.filter((_, i) => i !== index);
-    setPhotos(arr);
-  }
+    setPhotosArr(newArr);
+  }, [filesArr]);
 
   return (
     <Popup
@@ -242,14 +272,9 @@ const PopupCreate = () => {
             noticeTxt=""
           />
           <Participant img={userImg} name={user.username} isOrganizer={true} />
-          <DragField
-            initialPhotos={photos}
-            setPhotos={setPhotos}
-            // photoFiles={fileList}
-            // setPhotoFiles={setFileList}
-          />
+          <DragField filesArr={filesArr} setFilesArr={setFilesArr} />
           <ul className="photos">
-            {photos.map((photo, i) => (
+            {photosArr.map((photo, i) => (
               <li className="photos__item" key={photo}>
                 <img className="photos__img" src={photo} alt="Фото события" />
                 <button

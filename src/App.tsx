@@ -135,9 +135,9 @@ const App: FC = () => {
       </section>
       <PopupAuth />
       <PopupEvent />
-      <PopupNotification />
-      <PopupConfirm />
       <PopupCreate />
+      <PopupConfirm />
+      <PopupNotification />
     </div>
   );
 };

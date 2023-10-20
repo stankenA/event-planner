@@ -1,15 +1,14 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 type TDragFieldProps = {
-  initialPhotos: string[];
-  setPhotos: React.Dispatch<React.SetStateAction<string[]>>;
-  photoFiles?: FileList;
-  setPhotoFiles?: React.Dispatch<React.SetStateAction<FileList | undefined>>;
+  setFilesArr: React.Dispatch<React.SetStateAction<File[]>>;
+  filesArr: File[];
 };
 
-const DragField: FC<TDragFieldProps> = ({ initialPhotos, setPhotos }) => {
-  const [dragActive, setDragActive] = React.useState(false);
+const DragField: FC<TDragFieldProps> = ({ filesArr, setFilesArr }) => {
+  const [dragActive, setDragActive] = useState(false);
 
+  // Подсвечивание границ поля при наведении мышки с файлом
   const handleDrag = function (evt: React.DragEvent<HTMLDivElement>) {
     if (evt.type === "dragenter" || evt.type === "dragover") {
       setDragActive(true);
@@ -18,25 +17,31 @@ const DragField: FC<TDragFieldProps> = ({ initialPhotos, setPhotos }) => {
     }
   };
 
+  // "Сброс" файла на поле
   const handleDrop = function (evt: React.DragEvent<HTMLDivElement>) {
     evt.preventDefault();
     evt.stopPropagation();
     setDragActive(false);
-    if (evt.dataTransfer.files && evt.dataTransfer.files[0]) {
-      setPhotos([
-        ...initialPhotos,
-        URL.createObjectURL(evt.dataTransfer.files[0]),
-      ]);
-      // const files = evt.dataTransfer.files;
-      // setPhotoFiles(evt.dataTransfer.files);
+    if (
+      evt.dataTransfer.files &&
+      evt.dataTransfer.files[0] &&
+      evt.dataTransfer.files[0].size < 5242880
+    ) {
+      const arr = Array.from(evt.dataTransfer.files);
+      setFilesArr([...filesArr, ...arr]);
     }
   };
 
+  // Загрузка файла при нажатии на поле
   const handleChange = function (evt: React.ChangeEvent<HTMLInputElement>) {
     evt.preventDefault();
-    console.log(evt.target.files);
-    if (evt.target.files && evt.target.files[0]) {
-      setPhotos([...initialPhotos, URL.createObjectURL(evt.target.files[0])]);
+    if (
+      evt.target.files &&
+      evt.target.files[0] &&
+      evt.target.files[0].size < 5242880
+    ) {
+      const arr = Array.from(evt.target.files);
+      setFilesArr([...filesArr, ...arr]);
     }
   };
 

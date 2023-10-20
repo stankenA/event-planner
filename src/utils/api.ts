@@ -88,14 +88,20 @@ class API {
     }).then((data) => data);
   }
 
-  updateEventDataWithPhotos(token: string, eventData: TEvent) {
-    return this._request(`/events/${eventData.id}`, {
+  updateEventDataWithPhotos(
+    token: string,
+    eventId: number,
+    photosIdArr: string[]
+  ) {
+    return this._request(`/events/${eventId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(eventData),
+      body: JSON.stringify({
+        photos: photosIdArr,
+      }),
     }).then((data) => data);
   }
 
@@ -171,16 +177,13 @@ class API {
     }).then((data) => data);
   }
 
-  uploadFiles(token: string, files: FileList) {
-    return this._request(`/upload/files`, {
+  uploadFiles(token: string, files: FormData) {
+    return this._request(`/upload`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": " multipart/form-data",
       },
-      body: {
-        files: files,
-      },
+      body: files,
     }).then((data) => data);
   }
 }
