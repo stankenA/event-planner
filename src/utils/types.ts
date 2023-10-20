@@ -37,6 +37,7 @@ export type TEvent = {
   participants?: TUser[];
   owner?: TUser;
   updatedBy?: string | null;
+  isInactive?: boolean;
 };
 
 export type TCalendarProps = {

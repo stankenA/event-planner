@@ -101,7 +101,15 @@
     cursor: pointer;
 
     &_inactive {
-      color: var(--Gray, #b3b3bc);
+      .calendar__event-badge-txt {
+        color: var(--Gray, #b3b3bc) !important;
+      }
+
+      .calendar__event-icon {
+        display: none;
+      }
+
+      background-color: #efefef !important;
     }
 
     &_organizer {

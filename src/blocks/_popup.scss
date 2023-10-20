@@ -32,6 +32,11 @@
     justify-content: center;
     gap: 40px;
     max-height: 98vh;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
 
     &_large {
       width: 1075px;
@@ -102,7 +107,7 @@
     }
   }
 
-  &__password-info-container {
+  &__info-container {
     width: 100%;
     border-radius: 12px;
     background: var(--system-colors-bg, #fafafa);
@@ -113,9 +118,16 @@
     align-items: center;
     margin-top: 16px;
     margin-bottom: 24px;
+
+    &_event {
+      margin-top: 0;
+      margin-bottom: 0;
+      justify-content: center;
+      width: unset;
+    }
   }
 
-  &__password-info-txt {
+  &__info-txt {
     margin: 0;
     color: var(--main-colors-black, #0d0c0c);
     font-family: TT Commons;

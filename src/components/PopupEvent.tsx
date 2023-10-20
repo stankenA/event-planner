@@ -5,6 +5,7 @@ import { RootState } from "../redux/store";
 import Participant from "./Participant";
 import moment from "moment";
 import { eventMonths, weekdays } from "../utils/contstants";
+import infoIcon from "../images/info-icon.svg";
 
 import participantImg from "../images/user-avatar-default.png";
 import Gallery from "./Gallery";
@@ -95,6 +96,8 @@ const PopupEvent: FC = () => {
     dispatch(setIsEventPopupOpened(false));
   }
 
+  console.log(event);
+
   return (
     <Popup
       isOpened={isEventPopupOpened}
@@ -102,8 +105,22 @@ const PopupEvent: FC = () => {
       handleClose={handleClosePopup}
     >
       <h2 className="popup__title popup__title_event">{event.title}</h2>
+      {event.isInactive ? (
+        <div className="popup__info-container popup__info-container_event">
+          <img
+            src={infoIcon}
+            alt="Информационная иконка"
+            className="popup__info-icon"
+          />
+          <p className="popup__info-txt">Мероприятие уже прошло</p>
+        </div>
+      ) : null}
       <div className="event">
-        <div className="event__box">
+        <div
+          className={`event__box ${
+            event.isInactive ? "event__box_inactive" : ""
+          }`}
+        >
           <div className="event__date">
             <p className="event__txt-bold">{dayOfWeek}</p>
             <p className="event__txt-bold">
@@ -166,7 +183,7 @@ const PopupEvent: FC = () => {
         </div>
       </div>
       <Gallery />
-      {!user.isAuth ? (
+      {event.isInactive ? null : !user.isAuth ? (
         <p className="popup__bottom-txt">
           <button
             type="button"

@@ -139,13 +139,13 @@ const RegistrationForm: FC<TRegistrationFormProps> = ({
   return (
     <form className="popup__form popup__form_registration">
       <h2 className="popup__title">Регистрация</h2>
-      <div className="popup__password-info-container">
+      <div className="popup__info-container">
         <img
           src={infoIcon}
           alt="Информационная иконка"
-          className="popup__password-info-icon"
+          className="popup__info-icon"
         />
-        <p className="popup__password-info-txt">
+        <p className="popup__info-txt">
           {`В пароле используйте от 8 до 32 символов: строчные и прописные латинские буквы (A-z), цифры (0-9) и спец символы ( . , : ; ? ! * + % - < > @ [ ] { } / \ _ {} $ # )`}
         </p>
       </div>

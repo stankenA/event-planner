@@ -10,8 +10,12 @@ const EventBadge: FC<TEventBadge> = ({ date, event, isInactive }) => {
   const user = useSelector((state: RootState) => state.user);
 
   function handleEventClick() {
-    console.log(event);
-    dispatch(setEvent(event));
+    dispatch(
+      setEvent({
+        ...event,
+        isInactive: isInactive,
+      })
+    );
     dispatch(setIsEventPopupOpened(true));
   }
 
