@@ -1,6 +1,9 @@
 export type TButton = React.PropsWithChildren & {
   type: "button" | "submit";
   isDisabled?: boolean;
+  isRegistration?: boolean;
+  className?: string;
+  isSecondary?: boolean;
   handleClick: () => void;
 };
 
@@ -32,8 +35,9 @@ export type TEvent = {
   updatedAt: string;
   photos?: string[] | null;
   participants?: TUser[];
-  createdBy?: string | null;
+  owner?: TUser;
   updatedBy?: string | null;
+  isInactive?: boolean;
 };
 
 export type TCalendarProps = {

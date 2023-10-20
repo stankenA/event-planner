@@ -76,7 +76,7 @@ class API {
 
   // Events
   createEvent(token, eventData) {
-    return this._request("/users/me", {
+    return this._request("/events", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -126,12 +126,14 @@ class API {
     let finalURL;
 
     if (startDate && !endDate) {
-      finalURL = `?populate=filters[dateStart][$gte]=${startDate}&filters[dateEnd][$lte]=${startDate}`;
+      finalURL = `?populate=*&filters[dateStart][$gte]=${startDate}`;
     } else if (startDate && endDate) {
-      finalURL = `?populate=filters[dateStart][$gte]=${startDate}&filters[dateEnd][$lte]=${endDate}`;
+      finalURL = `?populate=*&filters[dateStart][$gte]=${startDate}&filters[dateStart][$lte]=${endDate}`;
+    } else {
+      finalURL = "";
     }
 
-    return this._request(`events${finalURL}`, {
+    return this._request(`/events${finalURL}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -167,11 +169,15 @@ class API {
     }).then((data) => data);
   }
 
-  uploadFiles(token, file) {
+  uploadFiles(token, files) {
     return this._request(`/upload/files`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": " multipart/form-data",
+      },
+      body: {
+        files: files,
       },
     }).then((data) => data);
   }

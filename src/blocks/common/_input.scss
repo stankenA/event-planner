@@ -15,6 +15,16 @@
       opacity: 1;
       visibility: visible;
     }
+
+    .input__clear-btn {
+      background-image: url(../../images/cross-icon-red.svg);
+    }
+  }
+
+  &_valid {
+    .input__element {
+      border-color: #23ae00 !important;
+    }
   }
 
   &__element {
@@ -79,7 +89,7 @@
 
   &__notice {
     position: absolute;
-    bottom: -23px;
+    top: 105%;
     left: 0;
     color: #f51b1b;
     font-family: TT Commons;
@@ -90,5 +100,49 @@
     opacity: 0;
     visibility: hidden;
     @include transition;
+  }
+
+  &__eye {
+    @include reset-btn;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(../../images/eye-closed.svg);
+    cursor: pointer;
+
+    &_opened {
+      background-image: url(../../images/eye-opened.svg);
+    }
+  }
+
+  &__clear-btn {
+    @include reset-btn;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    transform-origin: 50% 0;
+    background: url(../../images/cross-icon.svg) no-repeat center / 14px 14px;
+    cursor: pointer;
+    @include transition(0.1s);
+    opacity: 0;
+    visibility: hidden;
+
+    &:hover {
+      // opacity: 0.6;
+    }
+
+    &_visible {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 }

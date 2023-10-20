@@ -13,6 +13,7 @@
   color: #fff;
   cursor: pointer;
   display: flex;
+  gap: 8px;
   align-items: center;
   justify-content: center;
 
@@ -25,9 +26,25 @@
     background-color: var(--main-colors-accent, #f51b1b);
   }
 
+  &_secondary {
+    border: 1px solid var(--main-colors-black, #0d0c0c);
+    color: var(--main-colors-black, #0d0c0c);
+    background-color: transparent;
+
+    &:hover {
+      border: 1px solid var(--main-colors-accent, #f51b1b);
+      color: var(--main-colors-accent, #f51b1b);
+      background-color: transparent;
+    }
+  }
+
   &_disabled {
     background-color: var(--system-colors-element, #efefef);
     color: var(--Gray, #b3b3bc);
     pointer-events: none;
+  }
+
+  &_registration {
+    width: 346px;
   }
 }

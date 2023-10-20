@@ -1,53 +1,56 @@
-import React, {
-  FC,
-  MouseEventHandler,
-  PropsWithChildren,
-  useEffect,
-} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { setIsAuthPopupOpened } from "../redux/authPopup/slice";
+import React, { FC, PropsWithChildren, useEffect } from "react";
 
-const Popup: FC<PropsWithChildren> = ({ children }) => {
-  const dispatch = useDispatch();
-  const isPopupOpened = useSelector(
-    (state: RootState) => state.authPopup.isAuthPopupOpened
-  );
+type TPopupProps = PropsWithChildren & {
+  isOpened: boolean;
+  isLarge?: boolean;
+  isMedium?: boolean;
+  isSmall?: boolean;
+  handleClose: () => void;
+};
 
-  function closeModal() {
-    dispatch(setIsAuthPopupOpened(false));
-  }
-
+const Popup: FC<TPopupProps> = ({
+  children,
+  isOpened,
+  isLarge,
+  isMedium,
+  isSmall,
+  handleClose,
+}) => {
   function closeOnBg(evt: any) {
     if ((evt.target as Element).classList.contains("popup_opened")) {
-      closeModal();
+      handleClose();
     }
   }
 
   useEffect(() => {
     function closeOnEsc(evt: KeyboardEvent) {
       if (evt.key === "Escape") {
-        closeModal();
+        handleClose();
       }
     }
 
-    if (isPopupOpened) {
+    if (isOpened) {
       document.addEventListener("keydown", closeOnEsc);
     }
 
     return () => document.removeEventListener("keydown", closeOnEsc);
-  }, [isPopupOpened]);
+  }, [isOpened]);
 
   return (
     <div
-      className={`popup ${isPopupOpened ? "popup_opened" : ""}`}
+      className={`popup 
+      ${isOpened ? "popup_opened" : ""}`}
       onMouseDown={closeOnBg}
     >
-      <div className="popup__wrapper">
+      <div
+        className={`popup__wrapper ${isLarge ? "popup__wrapper_large" : ""} ${
+          isMedium ? "popup__wrapper_medium" : ""
+        } ${isSmall ? "popup__wrapper_small" : ""}`}
+      >
         <button
           type="button"
           className="popup__close"
-          onClick={closeModal}
+          onClick={handleClose}
         ></button>
         {children}
       </div>

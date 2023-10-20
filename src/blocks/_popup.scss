@@ -20,7 +20,7 @@
 
   &__wrapper {
     box-sizing: border-box;
-    padding: 80px 64px;
+    padding: 70px 64px;
     border-radius: 64px;
     background: var(--basic-base, #fff);
     position: relative;
@@ -31,6 +31,33 @@
     align-items: center;
     justify-content: center;
     gap: 40px;
+    max-height: 98vh;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &_large {
+      width: 1075px;
+      padding: 80px 0;
+      justify-content: flex-start;
+      gap: 30px;
+    }
+
+    &_medium {
+      width: 770px;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    &_small {
+      width: 710px;
+      min-height: unset;
+      gap: 64px;
+      padding: 80px 95px 64px;
+    }
   }
 
   &__close {
@@ -41,9 +68,10 @@
     display: block;
     top: 40px;
     right: 40px;
-    background: url(../images/close-icon.svg) no-repeat center / contain;
+    background: url(../images/cross-icon.svg) no-repeat center / 24px 24px;
     cursor: pointer;
     @include transition;
+    z-index: 2;
 
     &:hover {
       rotate: 180deg;
@@ -58,12 +86,97 @@
     letter-spacing: -0.72px;
     text-align: center;
     margin: 0;
+
+    &_event {
+      box-sizing: border-box;
+      padding-left: 64px;
+      padding-right: 64px;
+    }
   }
 
   &__form {
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 346px;
     gap: 40px;
+
+    &_registration {
+      width: 520px;
+      gap: 0;
+    }
+  }
+
+  &__info-container {
+    width: 100%;
+    border-radius: 12px;
+    background: var(--system-colors-bg, #fafafa);
+    box-sizing: border-box;
+    padding: 8px 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 16px;
+    margin-bottom: 24px;
+
+    &_event {
+      margin-top: 0;
+      margin-bottom: 0;
+      justify-content: center;
+      width: unset;
+    }
+  }
+
+  &__info-txt {
+    margin: 0;
+    color: var(--main-colors-black, #0d0c0c);
+    font-family: TT Commons;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+    letter-spacing: -0.28px;
+  }
+
+  &__fieldset {
+    width: 346px;
+    border: none;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  &__bottom-txt {
+    color: var(--main-colors-black, #0d0c0c);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 100%;
+    letter-spacing: -0.36px;
+    margin: 0;
+  }
+
+  &__bottom-btn {
+    @include reset-btn;
+    display: inline-block;
+    cursor: pointer;
+    color: var(--main-colors-accent, #f51b1b);
+  }
+
+  &__confirm-title {
+    max-width: 519px;
+    color: var(--main-colors-black, #0d0c0c);
+    text-align: center;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 100%; /* 36px */
+    letter-spacing: -0.72px;
+    margin: 0;
+  }
+
+  &__confirm-btns {
+    display: flex;
+    gap: 24px;
   }
 }

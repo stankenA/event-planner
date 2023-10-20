@@ -1,14 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import authPopupSlice from "./authPopup/slice";
+import popupsSlice from "./popups/slice";
 import datesSlice from "./dates/slice";
 import userSlice from "./user/slice";
+import eventSlice from "./event/slice";
+import notificationSlice from "./notification/slice";
+import flagSlice from "./flag/slice";
 
 export const store = configureStore({
   reducer: {
-    authPopup: authPopupSlice,
+    popups: popupsSlice,
     dates: datesSlice,
     user: userSlice,
+    event: eventSlice,
+    notification: notificationSlice,
+    flag: flagSlice,
   },
 });
 
