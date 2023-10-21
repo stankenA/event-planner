@@ -22,13 +22,11 @@ const App: FC = () => {
 
   // Переменные календаря
   const dispatch = useDispatch();
-  // const calendarDates = useSelector(
-  //   (state: RootState) => state.calendarDates.calendarDates
-  // );
 
   const [calendarDates, setCalendarDates] = useState([...Array(42).fill("")]);
   const [events, setEvents] = useState<TEvent[]>([]);
   const user = useSelector((state: RootState) => state.user);
+  // Флаг для триггера запроса ивентов с бэка
   const flag = useSelector((state: RootState) => state.flag.flag);
 
   const monthOverlap = useSelector(
