@@ -4,7 +4,6 @@
 
 ![image](https://github.com/stankenA/event-planner/assets/82235915/db15848b-d8c8-44ba-b67b-c22c94323818)
 
-
 ## Описание
 
 В приложении реализован следующий функционал:
@@ -35,7 +34,7 @@
 > Для локального развертывания выполните дополнительные шаги:
 
 4. Разверните бэкенд локально на своём устройстве, следуя инструкции по ссылке: https://gitlab.rdclr.ru/rc-foundation/frontend/planner
-5. В файле `constants.ts` измените переменную `BASE_URL` на `"http://localhost:1337/api"`
+5. В файле `constants.ts` измените значение переменной `BASE_URL` на `"http://localhost:1337/api"`
 
 ### Ссылки
 

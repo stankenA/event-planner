@@ -20,9 +20,9 @@ import {
   setNotificationMessage,
 } from "../redux/notification/slice";
 import { useFormWithValidation } from "../hooks/useFormWithValidation";
-import userImg from "../images/user-avatar-default.png";
 import { TUser } from "../utils/types";
 import defaultAvatar from "../images/user-avatar-default.png";
+import Calendar from "react-calendar";
 
 type TPopupCreateErrors = {
   title: string;
@@ -61,7 +61,7 @@ const PopupCreate = () => {
   const [filesArr, setFilesArr] = useState<File[]>([]);
   const [photosArr, setPhotosArr] = useState<string[]>([]);
   const [photosIdArr, setPhotosIdArr] = useState<string[]>([]);
-  // Пользователи
+  // Участники события
   const [initialUsers, setInitialUsers] = useState<TUser[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<TUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<TUser[]>([]);
@@ -154,7 +154,7 @@ const PopupCreate = () => {
       participants: [user],
     };
 
-    const photosData = processPhotoFiles(filesArr);
+    // const photosData = processPhotoFiles(filesArr);
     const jwt = localStorage.getItem("jwt");
 
     try {
@@ -229,7 +229,7 @@ const PopupCreate = () => {
     }
 
     getUsers();
-  }, []);
+  }, [user.isAuth]);
 
   // Слежение за отображением попапа участников
   useEffect(() => {
@@ -272,7 +272,7 @@ const PopupCreate = () => {
               type="date"
               name="dateStart"
               label="Начало"
-              placeholder="Введите название события"
+              placeholder="Начало"
               required={true}
               handleChange={handleChange}
               noticeTxt={noticeTxt.dateStart}
@@ -282,10 +282,17 @@ const PopupCreate = () => {
               type="date"
               name="dateEnd"
               label="Конец"
-              placeholder="Введите название события"
+              placeholder="Конец"
               handleChange={handleChange}
               noticeTxt={noticeTxt.dateEnd}
               isFocused={true}
+            />
+            <Calendar
+              className={"rangepicker"}
+              selectRange={true}
+              showFixedNumberOfWeeks={true}
+              nextLabel={""}
+              prevLabel={""}
             />
           </div>
           <Textarea
@@ -352,7 +359,11 @@ const PopupCreate = () => {
               </ul>
             </div>
           </div>
-          <Participant img={userImg} name={user.username} isOrganizer={true} />
+          <Participant
+            img={defaultAvatar}
+            name={user.username}
+            isOrganizer={true}
+          />
           <DragField filesArr={filesArr} setFilesArr={setFilesArr} />
           <ul className="photos">
             {photosArr.map((photo, i) => (
