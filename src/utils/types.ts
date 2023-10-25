@@ -22,8 +22,12 @@ export type TInput = {
   maxLength?: number;
   isValid?: boolean;
   pattern?: string;
+  readOnly?: boolean;
+  isDate?: boolean;
+  value?: string;
   handleChange?: (evt: ChangeEvent<HTMLInputElement>) => void;
   handleClear?: () => void;
+  onClick?: () => void;
 };
 
 export type TTextarea = {

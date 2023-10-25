@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, useState } from "react";
 import { TInput } from "../../utils/types";
+import calendarIcon from "../../images/calendar-icon.svg";
 
 const Input: FC<TInput> = ({
   type,
@@ -11,10 +12,14 @@ const Input: FC<TInput> = ({
   noticeTxt,
   minLength,
   maxLength,
+  value,
   isValid,
   pattern,
+  readOnly,
+  isDate,
   handleChange,
   handleClear,
+  onClick,
 }) => {
   const [inputValue, setInputValue] = useState("");
   const [isLabelFocused, setIsLabelFocused] = useState(
@@ -74,6 +79,7 @@ const Input: FC<TInput> = ({
       ${noticeTxt ? "input_notice" : ""} 
       ${isValid ? "input_valid" : ""}
       `}
+      onClick={onClick}
     >
       <label
         htmlFor={name}
@@ -90,13 +96,14 @@ const Input: FC<TInput> = ({
         name={name}
         required={required}
         type={inputType}
-        value={inputValue}
+        value={value ? value : inputValue}
         onChange={handleInputChange}
         placeholder={isPlaceholderShown ? `${placeholder}` : ""}
         className="input__element"
         onFocus={focusLabel}
         onBlur={unfocusLabel}
         pattern={pattern}
+        readOnly={readOnly}
       />
       {type === "password" ? (
         <button
@@ -104,7 +111,7 @@ const Input: FC<TInput> = ({
           className={`input__eye ${isPasswordShown ? "input__eye_opened" : ""}`}
           onClick={togglePasswordVisibility}
         ></button>
-      ) : type === "date" ? null : (
+      ) : type === "text" && !isDate ? (
         <button
           type="button"
           className={`input__clear-btn ${
@@ -112,7 +119,14 @@ const Input: FC<TInput> = ({
           }`}
           onClick={handleInputClear}
         ></button>
-      )}
+      ) : null}
+      {isDate ? (
+        <img
+          src={calendarIcon}
+          alt="Иконка календаря"
+          className="input__calendar-icon"
+        />
+      ) : null}
       <span className="input__notice">{noticeTxt}</span>
     </div>
   );

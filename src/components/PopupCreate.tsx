@@ -22,13 +22,11 @@ import {
 import { useFormWithValidation } from "../hooks/useFormWithValidation";
 import { TUser } from "../utils/types";
 import defaultAvatar from "../images/user-avatar-default.png";
-import Calendar from "react-calendar";
+import Rangepicker from "./Rangepicker";
 
 type TPopupCreateErrors = {
   title: string;
   description: string;
-  dateStart: string;
-  dateEnd: string;
   location: string;
   time: string;
   participants?: string;
@@ -44,66 +42,52 @@ const PopupCreate = () => {
   const [noticeTxt, setNoticeTxt] = useState<TPopupCreateErrors>({
     title: "",
     description: "",
-    dateStart: "",
-    dateEnd: "",
     location: "",
     time: "",
   });
   const { values, handleChange, errors, isValid } = useFormWithValidation({
     title: "",
-    description: "",
     dateStart: "",
+    description: "",
     location: "",
     time: "",
   });
 
+  console.log(values);
+
   // Drag and drop переменные
   const [filesArr, setFilesArr] = useState<File[]>([]);
   const [photosArr, setPhotosArr] = useState<string[]>([]);
-  const [photosIdArr, setPhotosIdArr] = useState<string[]>([]);
   // Участники события
   const [initialUsers, setInitialUsers] = useState<TUser[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<TUser[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<TUser[]>([]);
   const [isParticipantsShown, setIsParticipantsShown] = useState(false);
+  // Дейтпикер
+  const [datesValue, setDatesValue] = useState<string[]>([]);
 
   // Проверка валидности формы
   function checkFormValidity() {
     let errorsObj = {
       title: "",
       description: "",
-      dateStart: "",
-      dateEnd: "",
       location: "",
       time: "",
     };
     let isFormValid = true;
-
-    if (!isValid) {
-      errorsObj = {
-        title: errors.title,
-        description: errors.description,
-        dateStart: errors.dateStart,
-        dateEnd: errors.dateEnd,
-        location: errors.location,
-        time: errors.time,
-      };
-
-      isFormValid = false;
-    }
 
     if (!values.title) {
       errorsObj.title = "Это поле обязательно для заполнения";
       isFormValid = false;
     }
 
+    // if (!values.dateStart) {
+    //   errorsObj.dateStart = "Это поле обязательно для заполнения";
+    //   isFormValid = false;
+    // }
+
     if (!values.description) {
       errorsObj.description = "Это поле обязательно для заполнения";
-      isFormValid = false;
-    }
-
-    if (!values.dateStart) {
-      errorsObj.dateStart = "Это поле обязательно для заполнения";
       isFormValid = false;
     }
 
@@ -142,8 +126,8 @@ const PopupCreate = () => {
 
   // Создание нового ивента
   async function createNewEvent() {
-    const dateStart = moment(`${values.dateStart} ${values.time}`);
-    const dateEnd = moment(`${values.dateEnd}`);
+    const dateStart = moment(`${datesValue[0]}`);
+    const dateEnd = moment(`${datesValue[1]}`);
 
     const newEvent = {
       title: values.title,
@@ -268,31 +252,9 @@ const PopupCreate = () => {
             maxLength={140}
           />
           <div className="create__datepicker-container">
-            <Input
-              type="date"
-              name="dateStart"
-              label="Начало"
-              placeholder="Начало"
-              required={true}
+            <Rangepicker
+              setDatesValue={setDatesValue}
               handleChange={handleChange}
-              noticeTxt={noticeTxt.dateStart}
-              isFocused={true}
-            />
-            <Input
-              type="date"
-              name="dateEnd"
-              label="Конец"
-              placeholder="Конец"
-              handleChange={handleChange}
-              noticeTxt={noticeTxt.dateEnd}
-              isFocused={true}
-            />
-            <Calendar
-              className={"rangepicker"}
-              selectRange={true}
-              showFixedNumberOfWeeks={true}
-              nextLabel={""}
-              prevLabel={""}
             />
           </div>
           <Textarea
